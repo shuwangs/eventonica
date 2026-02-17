@@ -20,15 +20,15 @@ CREATE TABLE IF NOT EXISTS eventsdb.categories (
 
 -- add a foreign key constraint to link events to categories
 ALTER TABLE eventsdb.events 
-    ADD CONSTRAINT category_id
+    ADD CONSTRAINT fk_events_category_id
     FOREIGN KEY (category_id)
     REFERENCES eventsdb.categories(id) 
 ;
 
 -- create a junction table for many-to-many relationship between events and categories
 CREATE TABLE IF NOT EXISTS eventsdb.events_categories (
-    event_id INTEGER  REFERENCES eventsdb.events(id),
-    category_id INTEGER  REFERENCES eventsdb.categories(id),
+    event_id INTEGER  REFERENCES eventsdb.events(id) ON DELETE CASCADE,
+    category_id INTEGER  REFERENCES eventsdb.categories(id) ON DELETE CASCADE,
     PRIMARY KEY (event_id, category_id)
 );
 
