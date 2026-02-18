@@ -11,7 +11,6 @@ CREATE TABLE IF NOT EXISTS eventsdb.categories (
 CREATE TABLE IF NOT EXISTS eventsdb.events (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    category_id INTEGER REFERENCES categories(id),
     event_date_time TIMESTAMP NOT NULL,
     location VARCHAR(255) NOT NULL,
     description TEXT,
@@ -29,7 +28,8 @@ CREATE TABLE IF NOT EXISTS eventsdb.events_categories (
 CREATE TABLE IF NOT EXISTS eventsdb.users (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
-  email TEXT UNIQUE
+  email TEXT UNIQUE,
+  is_manager BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS eventsdb.user_favorites (
