@@ -13,9 +13,9 @@
 
 ## Nice to have
 
-- [ ]⭐ Favorite Events
+- [ ] ⭐ Favorite Events
 
-- [ ] Upcoming / Past Events 自动分类
+- [ ] Upcoming / Past Events 
 
 - [ ] Debounced search（300ms）
 
