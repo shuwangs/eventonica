@@ -26,4 +26,15 @@ CREATE TABLE IF NOT EXISTS eventsdb.events_categories (
     PRIMARY KEY (event_id, category_id)
 );
 
+CREATE TABLE IF NOT EXISTS eventsdb.users (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT UNIQUE
+);
 
+CREATE TABLE IF NOT EXISTS eventsdb.user_favorites (
+  user_id INTEGER NOT NULL REFERENCES eventsdb.users(id) ON DELETE CASCADE,
+  event_id INTEGER NOT NULL REFERENCES eventsdb.events(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  PRIMARY KEY (user_id, event_id)
+);
