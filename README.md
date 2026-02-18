@@ -46,10 +46,10 @@
 ### event owner
 - GET /api/events --- get all events. SELECT * FROM events
 - POST /api/events  --- add new events INSERT INTO events
-- GET /api/events/search -- supporting search event. SELECT WHERE *** FROM events
+- GET /api/events?query* -- supporting search event. SELECT WHERE *** FROM events
 - DELETE /api/events/:id. -- DELETE where id = eventID from events;
 
 ### favorite 
 - Get /api/users/:userId/favorites --- a user's favorite list
-- POST /api/favorites     --- INSERT INTO favorites (u_id, e_id)
-- DELETE /api/favorites   --- DELETE FROM favorites (u_id, e_id)
+- POST /api/:userId/favorites     --- INSERT INTO favorites (u_id, e_id)
+- DELETE /api/:userId/favorites/:eventId  --- DELETE FROM favorites (u_id, e_id)
