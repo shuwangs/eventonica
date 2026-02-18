@@ -1,26 +1,15 @@
 import React, { useState, useEffect } from "react";
-
+import userFrom from "../hooks/useForm";
 const UserRegisterForm = ({ onSubmit }) => {
-    const [user, setUser] = useState({
+    const [user, handleOnChange, resetForm] = userFrom({
         username: "",
         email: ""
     });
 
-    const handleOnChange = (e) => {
-        const {name, value} = e.target;
-        setUser(prevUser => ({
-            ...prevUser,
-            [name]: value
-        }))
-    }
-
     const handleSubmit = (e) => {
         e.preventDefault();
         onSubmit(user);
-        setUser({
-            username: "",
-            email: ""
-        });
+        resetForm();
     }
 
 
