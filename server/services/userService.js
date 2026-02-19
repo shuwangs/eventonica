@@ -1,5 +1,5 @@
 // add delete user, update user, get user by id, etc. functions here
-import * as sql_queries from "../utils/sql_queries.js";
+import * as sql_queries from "../utils/sql_helper.js";
 import pool from "../db/db.js";
 
 const getAllUsers = async () => {
