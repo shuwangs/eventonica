@@ -19,7 +19,7 @@ export const DELETE_USER = `
     RETURNING *;
 `
 // user_favorites Table: user_id, event_id
-export const ADD_FAVORITE = `
+export const ADD_USER_FAVORITE = `
     INSERT INTO eventsdb.user_favorites (user_id, event_id)
     VALUES ($1, $2)
     RETURNING *;
@@ -33,7 +33,7 @@ export const GET_USER_FAVORITES = `
     WHERE user_id = $1
 `;
 
-export const DELETE_FAVORITE = `
+export const DELETE_USER_FAVORITE = `
     DELETE FROM eventsdb.user_favorites
     WHERE user_id = $1 AND event_id = $2
     RETURNING *;    
@@ -42,25 +42,83 @@ export const DELETE_FAVORITE = `
 // Event related fields: id, name, event_date_time, location, category, description;
 // events Table: id, name, event_date_time, location, category, description
 // categories Table: id, name
-// event_categories Table: event_id, category_id
+// events_categories Table: event_id, category_id
 
-const ADD_EVENT =  ``;
+export const ADD_INTO_EVENTS =  `
+    INSERT INTO eventsdb.events (name, event_date_time, location, description)
+    VALUES ($1, $2, $3, $4)
+    RETURNING id;
+`;
 
-const DELETE_EVENT = ``;
+export const DELETE_EVENT = `
+    DELETE FROM eventsdb.events
+    WHERE id = $1
+    RETURNING *;
+`;
 
-const UPDATE_EVENT = ``;
+export const UPDATE_EVENT = `
+    UPDATE eventsdb.events
+    SET name = $2, event_date_time = $3, location = $4, description = $5
+    WHERE id = $1
+    RETURNING *;
+`;
 
 
 // USer and Manager shared function;
 
-const GET_EVENTS = ``;
+export const GET_ALL_EVENTS = `
+    SELECT e.id, e.name, e.event_date_time, e.location, e.description, ec.name AS category_name
+    FROM eventsdb.events AS e
+    LEFT JOIN eventsdb.events_categories AS ec ON e.id = ec.event_id
+`;
 
-const GET_EVENTS_BY_CATEGORY = ``;
+export const GET_SINGLE_EVENTS = `
+    SELECT e.id, e.name, e.event_date_time, e.location, e.description, ec.name AS category_name
+    FROM eventsdb.events AS e
+    LEFT JOIN eventsdb.events_categories AS ec ON e.id = ec.event_id
+    WHERE e.id = $1;
+`;
 
-// User function
+export const GET_EVENTS_BY_CATEGORY = `
+    SELECT e.id, e.name, e.event_date_time, e.location, e.description, ec.name AS category_name
+    FROM eventsdb.events AS e
+    LEFT JOIN eventsdb.events_categories AS ec ON e.id = ec.event_id
+    WHERE ec.name = $1;
+`;
 
-const ADD_FAVORITE = ``;
+export const GET_EVENTS_BY_DATE = `
+    SELECT e.id, e.name, e.event_date_time, e.location, e.description, ec.name AS category_name
+    FROM eventsdb.events AS e
+    LEFT JOIN eventsdb.events_categories AS ec ON e.id = ec.event_id
+    WHERE DATE(e.event_date_time) = $1;
+`;
 
-const GET_USER_FAVORITES = ``;
+export const GET_ALL_CATEGORIES = `
+    SELECT id, name
+    FROM eventsdb.categories;
+`;
 
+export const ADD_CATEGORY = `
+    INSERT INTO eventsdb.categories (name)
+    VALUES ($1)
+    ON CONFLICT (name) DO NOTHING
+    RETURNING *;
+`;
 
+export const ADD_EVENT_CATEGORY = `
+    INSERT INTO eventsdb.events_categories (event_id, category_id)
+    VALUES ($1, $2)
+    RETURNING *;
+`;
+
+export const DELETE_EVENT_CATEGORY = `
+    DELETE FROM eventsdb.events_categories
+    WHERE event_id = $1 AND category_id = $2
+    RETURNING *;
+`;
+
+export const DELETE_CATEGORY = `
+    DELETE FROM eventsdb.categories
+    WHERE id = $1
+    RETURNING *;
+`;

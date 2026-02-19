@@ -3,6 +3,22 @@ import * as sql_queries from "../utils/sql_queries.js";
 import pool from "../db/db.js";
 
 const getAllUsers = async () => {
-    const result = await pool.query(sql.GET_ALL_USERS);
+    const result = await pool.query(sql_queries.GET_ALL_USERS);
     return result.rows;
+};
+
+const addUser = async (name, email) => {
+    const result = await pool.query(sql_queries.ADD_USER, [name, email]);
+    return result.rows[0];
+};
+
+const deleteUser = async (id) => {
+    const result = await pool.query(sql_queries.DELETE_USER, [id]);
+    return result.rows[0];
+};
+
+export default {
+    getAllUsers,
+    addUser,
+    deleteUser
 };

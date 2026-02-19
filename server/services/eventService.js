@@ -3,5 +3,8 @@
 import * as sql_queries from "../utils/sql_queries.js";
 import pool from "../db/db.js";
 
-
+const getAllEvents = async () => {
+    const result = await pool.query(sql_queries.GET_ALL_EVENTS);
+    return result.rows;
+}
 
