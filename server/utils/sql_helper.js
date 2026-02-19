@@ -1,10 +1,9 @@
 
-
 // Manager function:
 
-const GET_USERS = `
-SELECT * FROM eventsdb.users
-ORDER BY id;
+export const GET_ALL_USERS = `
+SELECT name, email
+FROM eventsdb.users
 `;
 
 const ADD_EVENT =  ``;
