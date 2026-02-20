@@ -6,6 +6,12 @@ import fakeEvents from "../components/hardCodedEventsList.js";
 import "./ManagerPage.css";
 
 const ManagerPage = () => {
+  // TODO:
+  // 1. Toggle between Events and Users tab
+  // 2. Implement search functionality for events and users
+
+
+
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
