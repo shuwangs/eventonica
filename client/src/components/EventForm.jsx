@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import userFrom from "../hooks/useForm";
+import useForm  from "../hooks/useForm";
 import Form from "react-bootstrap/Form";
+import "./EventForm.css";
 
 const EventForm = ({ eventOnSubmit }) => {
-  const [event, handleOnChange, resetForm] = userFrom({
+  const [event, handleOnChange, resetForm] = useForm({
     name: "",
     event_date_time: "",
     location: "",
@@ -19,7 +20,9 @@ const EventForm = ({ eventOnSubmit }) => {
 
   return (
     <div className="event-form-container">
+      
       <Form className="event-form" onSubmit={handleSubmit}>
+        <h2>Add Event</h2>
         <label htmlFor="event-name">Event Name*</label>
         <input
           className="input-style"
@@ -33,6 +36,7 @@ const EventForm = ({ eventOnSubmit }) => {
 
         <label htmlFor="event-date-time"> Date and Time*</label>
         <input
+          className="input-style"
           type="datetime-local"
           id="event-date-time"
           name="event_date_time"
