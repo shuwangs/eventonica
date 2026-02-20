@@ -65,12 +65,13 @@ export const UPDATE_EVENT = `
 
 
 // USer and Manager shared function;
-
+// TODO: 
+// T0 FIX: merge categories won't work
 export const GET_ALL_EVENTS = `
-    SELECT e.id, e.name, e.event_date_time, e.location, e.description, ec.name AS category_name
-    FROM eventsdb.events AS e
-    LEFT JOIN eventsdb.events_categories AS ec ON e.id = ec.event_id
+    SELECT e.id, e.name, e.event_date_time, e.location, e.description
+    FROM eventsdb.events e
 `;
+
 
 export const GET_SINGLE_EVENTS = `
     SELECT e.id, e.name, e.event_date_time, e.location, e.description, ec.name AS category_name
@@ -121,4 +122,8 @@ export const DELETE_CATEGORY = `
     DELETE FROM eventsdb.categories
     WHERE id = $1
     RETURNING *;
+`;
+
+export const GET_ALL_CATEGORY = `
+    SELECT name FROM eventsdb.categories
 `;

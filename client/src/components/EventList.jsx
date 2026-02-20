@@ -4,6 +4,7 @@ import { TiEdit } from "react-icons/ti";
 import { MdOutlineDeleteForever } from "react-icons/md";
 
 const EventList = ({ events }) => {
+  console.log(events);
   const updateEvent = () => {
     console.log("trying updating the table");
   };
@@ -18,28 +19,31 @@ const EventList = ({ events }) => {
 
       <Table responsive>
         <thead>
-          <th>Event Name</th>
-          <th>Time</th>
-          <th>Location</th>
-          <th>Category</th>
-          <th>Description</th>
+          <tr>
+            <th>Event Name</th>
+            <th>Time</th>
+            <th>Location</th>
+            <th>Category</th>
+            <th>Description</th>
+          </tr>
         </thead>
         <tbody>
-          {events.map((event) => (
-            <tr>
-              <td>{event.name}</td>
-              <td>{event.event_date_time.toLocaleString()}</td>
-              <td>{event.location}</td>
-              <td>{event.category}</td>
-              <td>{event.description}</td>
-              <td onClick={updateEvent}>
-                <TiEdit />
-              </td>
-              <td onClick={deleteEvent}>
-                <MdOutlineDeleteForever />
-              </td>
-            </tr>
-          ))}
+          {events &&
+            events.map((event) => (
+              <tr>
+                <td>{event.name}</td>
+                <td>{event.event_date_time.toLocaleString()}</td>
+                <td>{event.location}</td>
+                <td>{event.category}</td>
+                <td>{event.description}</td>
+                <td onClick={updateEvent}>
+                  <TiEdit />
+                </td>
+                <td onClick={deleteEvent}>
+                  <MdOutlineDeleteForever />
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
     </div>

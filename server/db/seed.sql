@@ -9,6 +9,18 @@ VALUES
 ('Career')
 ON CONFLICT (name) DO NOTHING;
 
+
+INSERT INTO eventsdb.categories
+(name)
+VALUES
+  ('Tech'),
+  ('Networking'),
+  ('Workshop'),
+  ('Education'),
+  ('Community'),
+  ('Career')
+ON CONFLICT DO NOTHING;
+
 INSERT INTO eventsdb.events 
 (name, event_date_time, location, description, is_favorite)
 VALUES
@@ -23,6 +35,37 @@ VALUES
 ('AI Summit 2027', '2027-06-10 09:00:00', 'Convention Center', 'AI industry leaders', false),
 -- Past event
 ('Holiday Celebration', '2025-12-20 18:00:00', 'DC HQ', 'End of year party', true);
+
+
+INSERT INTO eventsdb.events_categories (event_id, category_id)
+SELECT e.id, c.id
+FROM eventsdb.events e
+JOIN eventsdb.categories c ON c.name = 'Education'
+WHERE e.name IN ('Mock Interview Night', 'Data Structures Crash Course')
+ON CONFLICT DO NOTHING;
+
+
+INSERT INTO eventsdb.events_categories (event_id, category_id)
+SELECT e.id, c.id
+FROM eventsdb.events e
+JOIN eventsdb.categories c ON c.name = 'Community'
+WHERE e.name IN ('Friday Game Night', 'Mindfulness & Coding', 'Holiday Celebration')
+ON CONFLICT DO NOTHING;
+
+
+INSERT INTO eventsdb.events_categories (event_id, category_id)
+SELECT e.id, c.id
+FROM eventsdb.events e
+JOIN eventsdb.categories c ON c.name = 'Workshop'
+WHERE e.name IN ('React Advanced Workshop')
+ON CONFLICT DO NOTHING;
+
+INSERT INTO eventsdb.events_categories (event_id, category_id)
+SELECT e.id, c.id
+FROM eventsdb.events e
+JOIN eventsdb.categories c ON c.name = 'Networking'
+WHERE e.name IN ('Women in Tech Networking')
+ON CONFLICT DO NOTHING;
 
 
 INSERT INTO eventsdb.users (name, email, is_manager)

@@ -1,10 +1,17 @@
 // event service to handle event related logic, such as creating, deleting, updating events, searching events, etc. 
 // This is where you would interact with the database to perform CRUD operations on events.
-import * as sql_queries from "../utils/sql_queries.js";
+import * as sql_queries from "../utils/sql_helper.js";
 import pool from "../db/db.js";
 
 const getAllEvents = async () => {
     const result = await pool.query(sql_queries.GET_ALL_EVENTS);
+    
+    console.log(result.rows);
+    return result.rows;
+}
+const getAllCategories = async () => {
+    const result = await pool.query(sql_queries.GET_ALL_CATEGORY);
+    console.log(result.rows);
     return result.rows;
 }
 
@@ -67,6 +74,7 @@ const updateEvent = async ({ id, name, event_date_time, location, description, c
 
 export default {
     getAllEvents, 
+    getAllCategories,
     getEventByCategory,
     getEventByDate,
     addEvent,
