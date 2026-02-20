@@ -40,16 +40,22 @@ const ManagerPage = () => {
   return (
     <div className="manager-page">
       <h1>Manager Page</h1>
-      <button onClick={addEvent}>+ Add Event</button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+   
+
+    <div className="search-container">
+      <button 
+        onClick={addEvent} className="btn-primary">+ Add Event</button>
+        <input type="text" id="userSearchInput" placeholder="Search events..." className="search-input" />
+    </div>
+
       {loading && <p>Loading...</p>}
-      {/* 弹窗 */}
+      {/* Popup Window */}
       {showEventForm && (
         <div className="modal-overlay">
           <div className="modal">
             <h2>Add Event</h2>
             <EventForm eventOnSubmit={handleCreateEvent} />
-            <button onClick={() => setShowEventFrom(false)}>Cancel</button>
+            <button onClick={() => setShowEventFrom(false)} className = "btn-secondary">Cancel</button>
           </div>
         </div>
       )}

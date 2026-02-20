@@ -22,6 +22,7 @@ const EventForm = ({ eventOnSubmit }) => {
       <Form className="event-form" onSubmit={handleSubmit}>
         <label htmlFor="event-name">Event Name*</label>
         <input
+          className="input-style"
           type="text"
           id="event-name"
           name="name"
@@ -42,6 +43,7 @@ const EventForm = ({ eventOnSubmit }) => {
 
         <label htmlFor="event-location"> Location* </label>
         <input
+          className="input-style"
           type="text"
           id="event-location"
           name="location"
@@ -52,9 +54,10 @@ const EventForm = ({ eventOnSubmit }) => {
 
         <label htmlFor="event-category"> Category*</label>
         <input
+          className="input-style"
           type="text"
           id="event-category"
-          name="category"
+          name="category" 
           value={event.category}
           onChange={handleOnChange}
           required
@@ -69,7 +72,8 @@ const EventForm = ({ eventOnSubmit }) => {
           required
         ></textarea>
 
-        <button type="submit">Add Event</button>
+        <button type="submit" className="btn-primary">Save</button>
+        <button type="reset" className="btn-secondary">Cancel</button>
       </Form>
     </div>
   );
