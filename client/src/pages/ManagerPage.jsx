@@ -3,7 +3,7 @@ import UserRegisterForm from "../components/UserRegisterForm";
 import EventList from "../components/EventList";
 import EventForm from "../components/EventForm.jsx";
 import fakeEvents from "../components/hardCodedEventsList.js";
-import "../App.css";
+import "./ManagerPage.css";
 
 const ManagerPage = () => {
   const [events, setEvents] = useState([]);
@@ -45,6 +45,12 @@ const ManagerPage = () => {
         <div><h1>🔧 Admin Panel</h1></div>
       </div>
 
+    {/* Manager Tabs */}
+      <div className="manager-page-tabs">
+        <button className="btn-tab active" >Events</button>
+        <button className="btn-tab">Users</button>
+      </div>
+      
       <div className="search-container">
         <button 
           onClick={addEvent} className="btn-primary">+ Add Event</button>
