@@ -98,7 +98,7 @@ export const GET_ALL_CATEGORIES = `
     FROM eventsdb.categories;
 `;
 
-export const ADD_CATEGORY = `
+export const ADD_TO_CATEGORIES = `
     INSERT INTO eventsdb.categories (name)
     VALUES ($1)
     ON CONFLICT (name) DO NOTHING
