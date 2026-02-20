@@ -1,0 +1,8 @@
+ .user-page-header {
+  display: flex;
+  flex-direction: row;
+  font-size: 1.5rem;
+  line-height: 1.1rem;
+  border-bottom: 2px solid var(--border-edge);
+}
+

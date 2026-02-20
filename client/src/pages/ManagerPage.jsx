@@ -3,6 +3,7 @@ import UserRegisterForm from "../components/UserRegisterForm";
 import EventList from "../components/EventList";
 import EventForm from "../components/EventForm.jsx";
 import fakeEvents from "../components/hardCodedEventsList.js";
+import "../App.css";
 import "./ManagerPage.css";
 
 const ManagerPage = () => {
