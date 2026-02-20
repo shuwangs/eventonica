@@ -65,6 +65,7 @@ const EventForm = ({ eventOnSubmit }) => {
 
         <label htmlFor="event-descriptions"> Description*</label>
         <textarea
+          className="input-style"
           id="event-descriptions"
           name="descriptions"
           value={event.descriptions}

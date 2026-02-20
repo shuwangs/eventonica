@@ -7,11 +7,16 @@
   font-family: 'Quicksand', sans-serif;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.manager-page-header {
+  font-size: 1.5rem;
+  line-height: 1.1rem;
+  border-bottom: 2px solid #888;
+}
+
+.input-style.search-input {
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  width: 60%;
 }
 
 @keyframes logo-spin {
