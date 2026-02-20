@@ -4,6 +4,8 @@ import Form from "react-bootstrap/Form";
 import "./EventForm.css";
 
 const EventForm = ({ eventOnSubmit }) => {
+  // TODO: fetch categories from the backend and populate the category input as a dropdown
+
   const [event, handleOnChange, resetForm] = useForm({
     name: "",
     event_date_time: "",
@@ -33,6 +35,16 @@ const EventForm = ({ eventOnSubmit }) => {
           onChange={handleOnChange}
           required
         />
+
+        <label htmlFor="event-descriptions"> Description*</label>
+        <textarea
+          className="input-style"
+          id="event-descriptions"
+          name="descriptions"
+          value={event.descriptions}
+          onChange={handleOnChange}
+          required
+        ></textarea>
 
         <label htmlFor="event-date-time"> Date and Time*</label>
         <input
@@ -67,18 +79,11 @@ const EventForm = ({ eventOnSubmit }) => {
           required
         />
 
-        <label htmlFor="event-descriptions"> Description*</label>
-        <textarea
-          className="input-style"
-          id="event-descriptions"
-          name="descriptions"
-          value={event.descriptions}
-          onChange={handleOnChange}
-          required
-        ></textarea>
+        <div className="btn-group">
+          <button type="submit" className="btn-primary">Save</button>
+          <button type="reset" className="btn-secondary">Cancel</button>
+        </div>
 
-        <button type="submit" className="btn-primary">Save</button>
-        <button type="reset" className="btn-secondary">Cancel</button>
       </Form>
     </div>
   );
