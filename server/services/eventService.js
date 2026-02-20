@@ -62,3 +62,13 @@ const updateEvent = async ({ id, name, event_date_time, location, description, c
 
 }
 
+// TODO: delete event;
+
+
+export default {
+    getAllEvents, 
+    getEventByCategory,
+    getEventByDate,
+    addEvent,
+    updateEvent
+}
