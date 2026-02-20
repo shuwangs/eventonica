@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import * as sql_queries from "./utils/sql_helper.js";
+import userService from './services/userService.js';
+import eventService from './services/eventService.js';
 import pool from './db/db.js';
+
 
 const app = express();
 
@@ -11,11 +13,32 @@ app.use(express.json())
 
 
 app.get("/api/users", async (req, res)=>{
-    const result = await pool.query(sql_queries.GET_ALL_USERS);
-    // console.log(result);
-    res.json(result.rows);
+    try{
+        const result = await userService.getAllUsers();
+        console.log(`the users are : \n ${result}`)
+
+        res.json(result.rows);
+    }catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to fetch users." });
+    }
+
 })
 
+
+// get all the events;
+app.get("/api/events", async (req, res) => {
+    try{
+        const result = await eventService.getAllEvents();
+        console.log(`the events are : \n ${result}`)
+        res.json(result);
+
+    } catch(err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to fetch events." });
+
+    }
+})
 
 
 
