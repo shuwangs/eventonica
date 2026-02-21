@@ -3,14 +3,10 @@ import Table from "react-bootstrap/Table";
 import { TiEdit } from "react-icons/ti";
 import { MdOutlineDeleteForever } from "react-icons/md";
 
-const EventList = ({ events }) => {
+const EventList = ({ events, onDelete }) => {
   console.log(events);
   const updateEvent = () => {
     console.log("trying updating the table");
-  };
-
-  const deleteEvent = () => {
-    console.log("deleting the event");
   };
 
   return (
@@ -39,7 +35,7 @@ const EventList = ({ events }) => {
                 <td onClick={updateEvent}>
                   <TiEdit />
                 </td>
-                <td onClick={deleteEvent}>
+                <td onClick={() => onDelete(event.id)}>
                   <MdOutlineDeleteForever />
                 </td>
               </tr>

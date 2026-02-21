@@ -37,6 +37,21 @@ app.get("/api/events", async (req, res) => {
     }
 })
 
+app.delete("/api/events/:id", async (req, res) => {
+    const deleteId = Number(req.params.id);
+    console.log(`the id to be deleted ${deleteId}`);
+
+    try{
+        const result = await eventService.deleteEvent(deleteId);
+        console.log(`the events are : \n ${result}`)
+        res.json(result);
+
+    } catch(err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to delte events." });
+
+    }
+})
 
 
 export default app;

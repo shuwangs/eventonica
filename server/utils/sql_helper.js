@@ -51,7 +51,7 @@ export const ADD_INTO_EVENTS =  `
 `;
 
 export const DELETE_EVENT = `
-    DELETE FROM events
+    DELETE FROM eventsdb.events
     WHERE id = $1
     RETURNING *;
 `;

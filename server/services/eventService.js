@@ -54,7 +54,7 @@ const updateEvent = async ({ id, name, event_date_time, location, description, c
         const updatedRes = await client.query(sql_queries.UPDATE_EVENT, 
             [name, event_date_time, location, description ]);
 
-        await client.query(q.ADD_EVENT_CATEGORY, [id, categoryId]);
+        await client.query(sql_queries.ADD_EVENT_CATEGORY, [id, categoryId]);
 
         await client.query("COMMIT");
 
@@ -66,11 +66,13 @@ const updateEvent = async ({ id, name, event_date_time, location, description, c
         client.release();
     }
 
-
 }
 
 // TODO: delete event;
-
+const deleteEvent = async (id) => {
+    const res = await pool.query(sql_queries.DELETE_EVENT, [id]);
+    return res.rows;
+}
 
 export default {
     getAllEvents, 
@@ -78,5 +80,6 @@ export default {
     getEventByCategory,
     getEventByDate,
     addEvent,
-    updateEvent
+    updateEvent,
+    deleteEvent
 }

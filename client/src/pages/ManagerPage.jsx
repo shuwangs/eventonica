@@ -96,7 +96,12 @@ const ManagerPage = () => {
       )}
 
       {/* Show the Events  */}
-      {ui.activeTab === "events" && <EventList events={events} />}
+      {ui.activeTab === "events" && (
+        <EventList
+          events={events}
+          onDelete={(id) => deleteEvent(dispatch, id)}
+        />
+      )}
 
       {/* Show the users */}
 
