@@ -25,7 +25,7 @@ const EventForm = ({ eventOnSubmit, onClose }) => {
     resetForm();
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     resetForm();
   };
 
@@ -96,10 +96,14 @@ const EventForm = ({ eventOnSubmit, onClose }) => {
         />
 
         <div className="btn-group">
-          <button type="submit" className="btn-primary">
+          <button type="submit" className="save-btn btn-primary">
             Save
           </button>
-          <button type="reset" className="btn-secondary" onClick={handleCancel}>
+          <button
+            type="reset"
+            className="cancel-btn btn-secondary"
+            onClick={handleCancel}
+          >
             Cancel
           </button>
         </div>
