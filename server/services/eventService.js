@@ -6,7 +6,7 @@ import pool from "../db/db.js";
 const getAllEvents = async () => {
     const result = await pool.query(sql_queries.GET_ALL_EVENTS);
     
-    console.log(result.rows);
+    // console.log(result.rows);
     return result.rows;
 }
 const getAllCategories = async () => {

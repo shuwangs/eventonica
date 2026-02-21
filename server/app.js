@@ -2,8 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import userService from './services/userService.js';
 import eventService from './services/eventService.js';
-import pool from './db/db.js';
-
 
 const app = express();
 
@@ -16,8 +14,7 @@ app.get("/api/users", async (req, res)=>{
     try{
         const result = await userService.getAllUsers();
         console.log(`the users are : \n ${result}`)
-
-        res.json(result.rows);
+        res.json(result);
     }catch (err) {
         console.error(err);
         res.status(500).json({ error: "Failed to fetch users." });

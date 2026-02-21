@@ -3,7 +3,7 @@
 
 // User table: id, name, email, is_manager
 export const GET_ALL_USERS = `
-    SELECT id, name, email
+    SELECT id, name, email, is_manager
     FROM eventsdb.users
 `;
 
@@ -51,13 +51,13 @@ export const ADD_INTO_EVENTS =  `
 `;
 
 export const DELETE_EVENT = `
-    DELETE FROM eventsdb.events
+    DELETE FROM events
     WHERE id = $1
     RETURNING *;
 `;
 
 export const UPDATE_EVENT = `
-    UPDATE eventsdb.events
+    UPDATE events
     SET name = $2, event_date_time = $3, location = $4, description = $5
     WHERE id = $1
     RETURNING *;
@@ -68,7 +68,7 @@ export const UPDATE_EVENT = `
 // TODO: 
 // T0 FIX: merge categories won't work
 export const GET_ALL_EVENTS = `
-    SELECT e.id, e.name, e.event_date_time, e.location, e.description
+    SELECT e.id, e.name, e.event_date_time,  e.location, e.category, e.description
     FROM eventsdb.events e
 `;
 

@@ -4,6 +4,7 @@ import pool from "../db/db.js";
 
 const getAllUsers = async () => {
     const result = await pool.query(sql_queries.GET_ALL_USERS);
+    console.log(`Users are ${result}`)
     return result.rows;
 };
 
