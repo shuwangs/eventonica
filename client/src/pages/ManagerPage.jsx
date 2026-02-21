@@ -1,62 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import UserRegisterForm from "../components/UserRegisterForm";
 import EventList from "../components/EventList";
 import EventForm from "../components/EventForm.jsx";
 import UserList from "../components/UserList.jsx";
+import {
+  managerReducer,
+  initialState,
+  ACTIONS,
+} from "../hooks/managerReducer.jsx";
+import {
+  fetchEvents,
+  fetchUsers,
+  createEvent,
+  deleteEvent,
+} from "../controller/userManagerController.jsx";
+
 import "../App.css";
 import "./ManagerPage.css";
 
 const ManagerPage = () => {
   // TODO:
-  // 1. Toggle between Events and Users tab
   // 2. Implement search functionality for events and users
 
-  const [events, setEvents] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [showEventForm, setShowEventForm] = useState(false);
-  const [activeTab, setActiveTab] = useState("events");
+  const [state, dispatch] = useReducer(managerReducer, initialState);
+
+  const { events, users, error, loading, ui } = state;
 
   useEffect(() => {
-    fetchEvents();
-    fetchUsers();
+    fetchEvents(dispatch);
+    fetchUsers(dispatch);
   }, []);
-
-  const fetchEvents = async () => {
-    setLoading(true);
-
-    try {
-      const response = await fetch("/api/events");
-      if (!response.ok) {
-        throw new Error("Failed to fetch events");
-      }
-      const data = await response.json();
-      console.log(`fetched events is: ${data}`);
-      setEvents(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchUsers = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch("/api/users");
-      if (!response.ok) {
-        throw new Error("Failed to fetch users");
-      }
-      const data = await response.json();
-      console.log(`fetched users are: ${data}`);
-      setUsers(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="manager-page-container">
@@ -67,14 +40,18 @@ const ManagerPage = () => {
       {/* Manager Tabs */}
       <div className="manager-page-tabs">
         <button
-          className={`btn-tab ${activeTab === "events" ? "active" : ""}`}
-          onClick={() => setActiveTab("events")}
+          className={`btn-tab ${ui.activeTab === "events" ? "active" : ""}`}
+          onClick={() =>
+            dispatch({ type: ACTIONS.setActiveTab, payload: "events" })
+          }
         >
           Events
         </button>
         <button
-          className={`btn-tab ${activeTab === "users" ? "active" : ""}`}
-          onClick={() => setActiveTab("users")}
+          className={`btn-tab ${ui.activeTab === "users" ? "active" : ""}`}
+          onClick={() =>
+            dispatch({ type: ACTIONS.setActiveTab, payload: "users" })
+          }
         >
           Users
         </button>
@@ -82,7 +59,12 @@ const ManagerPage = () => {
 
       {/* Search + Add */}
       <div className="search-container">
-        <button onClick={() => setShowEventForm(true)} className="btn-primary">
+        <button
+          onClick={() =>
+            dispatch({ type: ACTIONS.setShowEventForm, payload: true })
+          }
+          className="btn-primary"
+        >
           + Add Event
         </button>
 
@@ -98,7 +80,7 @@ const ManagerPage = () => {
       {loading && <p>Loading...</p>}
 
       {/* Popup Window */}
-      {showEventForm && (
+      {ui.showEventForm && (
         <div className="modal-overlay">
           <div className="modal">
             <h2>Add Event</h2>
@@ -114,11 +96,11 @@ const ManagerPage = () => {
       )}
 
       {/* Show the Events  */}
-      {activeTab === "events" && <EventList events={events} />}
+      {ui.activeTab === "events" && <EventList events={events} />}
 
       {/* Show the users */}
 
-      {activeTab === "users" && <UserList users={users} />}
+      {ui.activeTab === "users" && <UserList users={users} />}
     </div>
   );
 };
