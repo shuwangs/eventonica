@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import useForm from "../hooks/useForm";
 import Form from "react-bootstrap/Form";
+import {
+  managerReducer,
+  initialState,
+  ACTIONS,
+} from "../hooks/managerReducer.jsx";
 import "./EventForm.css";
 
-const EventForm = ({ eventOnSubmit }) => {
+const EventForm = ({ eventOnSubmit, onClose }) => {
   // TODO: fetch categories from the backend and populate the category input as a dropdown
 
   const [event, handleOnChange, resetForm] = useForm({
@@ -27,7 +32,15 @@ const EventForm = ({ eventOnSubmit }) => {
   return (
     <div className="event-form-container">
       <Form className="event-form" onSubmit={handleSubmit}>
-        <h2>Add Event</h2>
+        <div className="event-form-header">
+          <h2>Add Event</h2>
+          <p>
+            <span className="close-icon" onClick={onClose}>
+              ✖︎
+            </span>
+          </p>
+        </div>
+
         <label htmlFor="event-name">Event Name*</label>
         <input
           className="input-style"
@@ -86,7 +99,7 @@ const EventForm = ({ eventOnSubmit }) => {
           <button type="submit" className="btn-primary">
             Save
           </button>
-          <button type="reset" className="btn-secondary">
+          <button type="reset" className="btn-secondary" onClick={handleCancel}>
             Cancel
           </button>
         </div>

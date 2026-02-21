@@ -47,3 +47,21 @@
   margin-top: 20px;
   width: 100%
 }
+
+.event-form-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.close-icon {
+  color: var(--accent-primary);
+  font-size: larger;
+}
+
+.close-icon:hover {
+  border: 1px solid var(--border-edge);
+  border-radius: 4px;
+  padding: 5px;
+  background-color: var(--border-edge);
+}

@@ -86,6 +86,9 @@ const ManagerPage = () => {
             <h2>Add Event</h2>
             <EventForm
               eventOnSubmit={(eventData) => createEvent(dispatch, eventData)}
+              onClose={() =>
+                dispatch({ type: ACTIONS.setShowEventForm, payload: false })
+              }
             />
           </div>
         </div>
