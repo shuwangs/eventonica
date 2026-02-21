@@ -84,13 +84,9 @@ const ManagerPage = () => {
         <div className="modal-overlay">
           <div className="modal">
             <h2>Add Event</h2>
-            <EventForm eventOnSubmit={handleCreateEvent} />
-            {/* <button
-              onClick={() => setShowEventForm(false)}
-              className="btn-secondary"
-            >
-              Cancel
-            </button> */}
+            <EventForm
+              eventOnSubmit={(eventData) => createEvent(dispatch, eventData)}
+            />
           </div>
         </div>
       )}

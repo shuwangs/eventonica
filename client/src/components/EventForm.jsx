@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import useForm  from "../hooks/useForm";
+import useForm from "../hooks/useForm";
 import Form from "react-bootstrap/Form";
 import "./EventForm.css";
 
@@ -11,7 +11,7 @@ const EventForm = ({ eventOnSubmit }) => {
     event_date_time: "",
     location: "",
     category: "",
-    descriptions: "",
+    description: "",
   });
 
   const handleSubmit = (e) => {
@@ -20,9 +20,12 @@ const EventForm = ({ eventOnSubmit }) => {
     resetForm();
   };
 
+  const handleCancel = (e) => {
+    resetForm();
+  };
+
   return (
     <div className="event-form-container">
-      
       <Form className="event-form" onSubmit={handleSubmit}>
         <h2>Add Event</h2>
         <label htmlFor="event-name">Event Name*</label>
@@ -36,12 +39,12 @@ const EventForm = ({ eventOnSubmit }) => {
           required
         />
 
-        <label htmlFor="event-descriptions"> Description*</label>
+        <label htmlFor="event-description"> Description*</label>
         <textarea
           className="input-style"
-          id="event-descriptions"
-          name="descriptions"
-          value={event.descriptions}
+          id="event-description"
+          name="description"
+          value={event.description}
           onChange={handleOnChange}
           required
         ></textarea>
@@ -73,17 +76,20 @@ const EventForm = ({ eventOnSubmit }) => {
           className="input-style"
           type="text"
           id="event-category"
-          name="category" 
+          name="category"
           value={event.category}
           onChange={handleOnChange}
           required
         />
 
         <div className="btn-group">
-          <button type="submit" className="btn-primary">Save</button>
-          <button type="reset" className="btn-secondary">Cancel</button>
+          <button type="submit" className="btn-primary">
+            Save
+          </button>
+          <button type="reset" className="btn-secondary">
+            Cancel
+          </button>
         </div>
-
       </Form>
     </div>
   );

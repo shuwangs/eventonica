@@ -45,9 +45,9 @@ export const DELETE_USER_FAVORITE = `
 // events_categories Table: event_id, category_id
 
 export const ADD_INTO_EVENTS =  `
-    INSERT INTO eventsdb.events (name, event_date_time, location, description)
-    VALUES ($1, $2, $3, $4)
-    RETURNING id;
+    INSERT INTO eventsdb.events (name, event_date_time, location, category ,description)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *;
 `;
 
 export const DELETE_EVENT = `

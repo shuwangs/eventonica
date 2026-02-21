@@ -25,24 +25,10 @@ const getEventByDate = async (dateStr) => {
     return result.rows;
 }
 
-const addEvent = async ({ name, event_date_time, location, description, categoryName}) => {
-    const client = await pool.connect();
-    try{
-        await client.query("BEGIN");
-
-        const eventRes = await client.query(sql_queries.ADD_INTO_EVENTS, [name, event_date_time, location, description])
-        const cateRes = await client.query(sql_queries.ADD_TO_CATEGORIES, [categoryName]);
-        const eventCatRes = await client.query(sql_queries.ADD_EVENT_CATEGORY, [name, categoryName]);
+const addEvent = async ({ name, event_date_time, location, category, description}) => {
+    const result = await pool.query(sql_queries.ADD_INTO_EVENTS, [name, event_date_time, location, category, description]);
         
-        await pool.query("COMMIT");
-    }catch(err) {
-        console.log(err);
-        await client.query("ROLLBACK");
-    } finally{
-        client.release();
-    }
-    
-    return null;
+    return result.rows;
 }
 
 const updateEvent = async ({ id, name, event_date_time, location, description, categoryName}) => {

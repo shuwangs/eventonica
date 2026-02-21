@@ -53,5 +53,20 @@ app.delete("/api/events/:id", async (req, res) => {
     }
 })
 
+app.post("/api/events", async (req, res) => {
+    const eventData = req.body;
+    const {name, event_date_time, location,category, description} = req.body;
+
+    try{
+        const result = await eventService.addEvent( {name, event_date_time, location, description, category});
+        console.log(`the events are : \n ${result}`)
+        res.json(result);
+
+    } catch(err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to delte events." });
+
+    }
+})
 
 export default app;
