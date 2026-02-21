@@ -8,25 +8,39 @@ import {
 } from "../hooks/managerReducer.jsx";
 import "./EventForm.css";
 
-const EventForm = ({ eventOnSubmit, onClose }) => {
+const EventForm = ({ eventOnSubmit, onClose, initialEvent = null }) => {
   // TODO: fetch categories from the backend and populate the category input as a dropdown
-
-  const [event, handleOnChange, resetForm] = useForm({
+  const initalData = {
     name: "",
     event_date_time: "",
     location: "",
     category: "",
     description: "",
-  });
+  };
+  const [event, handleOnChange, resetForm] = useForm(initalData);
+
+  useEffect(() => {
+    if (initialEvent) {
+      resetForm({
+        name: initialEvent.name ?? "",
+        event_date_time: initialEvent.event_date_time ?? "",
+        location: initialEvent.location ?? "",
+        category: initialEvent.category ?? initialEvent.categoryName ?? "",
+        description: initialEvent.description ?? "",
+      });
+    } else {
+      resetForm(initalData);
+    }
+  }, [initialEvent]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     eventOnSubmit(event);
-    resetForm();
+    resetForm(initalData);
   };
 
   const handleCancel = () => {
-    resetForm();
+    resetForm(initalData);
   };
 
   return (

@@ -24,7 +24,7 @@ const ManagerPage = () => {
 
   const [state, dispatch] = useReducer(managerReducer, initialState);
 
-  const { events, users, error, loading, ui } = state;
+  const { events, users, error, loading, ui, editingEvent } = state;
 
   useEffect(() => {
     fetchEvents(dispatch);
@@ -85,6 +85,7 @@ const ManagerPage = () => {
           <div className="modal">
             <h2>Add Event</h2>
             <EventForm
+              initialEvent={editingEvent}
               eventOnSubmit={(eventData) => createEvent(dispatch, eventData)}
               onClose={() =>
                 dispatch({ type: ACTIONS.setShowEventForm, payload: false })
@@ -99,6 +100,10 @@ const ManagerPage = () => {
         <EventList
           events={events}
           onDelete={(id) => deleteEvent(dispatch, id)}
+          onEdit={(event) => {
+            dispatch({ type: ACTIONS.setEditingEvent, payload: event });
+            dispatch({ type: ACTIONS.setShowEventForm, payload: true });
+          }}
         />
       )}
 

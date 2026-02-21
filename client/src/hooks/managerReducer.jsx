@@ -3,6 +3,7 @@ export const initialState = {
   users: [],
   loading: false,
   error: null,
+  editingEvent: null,
   ui: {
     activeTab: "events",
     showEventForm: false,
@@ -19,6 +20,7 @@ export const ACTIONS = {
   setActiveTab: "setActiveTab",
   setError: "setError",
   setLoading: "setLoading",
+  setEditingEvent: "setEditingEvent",
   setShowEventForm: "setShowEventForm",
 };
 
@@ -55,6 +57,15 @@ export function managerReducer(state, action) {
 
     case ACTIONS.setError:
       return { ...state, error: action.payload };
+
+    case ACTIONS.updateEvent:
+      return {
+        ...state,
+        events: state.events.map((e) =>
+          e.id === action.payload.id ? action.payload : e,
+        ),
+        editingEvent: null,
+      };
 
     default:
       return state;
