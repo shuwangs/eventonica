@@ -28,7 +28,7 @@ const EventList = ({ events, onDelete, onEdit }) => {
                 <td>{event.location}</td>
                 <td>{event.category}</td>
                 <td>{event.description}</td>
-                <td onClick={onEdit}>
+                <td onClick={() => onEdit(event)}>
                   <TiEdit />
                 </td>
                 <td onClick={() => onDelete(event.id)}>

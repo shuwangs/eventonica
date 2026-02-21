@@ -58,6 +58,8 @@ export function managerReducer(state, action) {
     case ACTIONS.setError:
       return { ...state, error: action.payload };
 
+    case ACTIONS.setEditingEvent:
+      return { ...state, editingEvent: action.payload };
     case ACTIONS.updateEvent:
       return {
         ...state,
