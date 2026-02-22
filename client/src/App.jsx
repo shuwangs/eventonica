@@ -9,10 +9,13 @@ function App() {
   return (
     <BrowserRouter>
       <TopNav />
-      <Routes>
-        <Route path="/admin" element={<ManagerPage />} />
-        <Route path="/user" element={<UserPage />} />
-      </Routes>
+
+      <div className="app-container">
+        <Routes>
+          <Route path="/admin" element={<ManagerPage />} />
+          <Route path="/user" element={<UserPage />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }

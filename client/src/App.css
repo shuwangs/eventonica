@@ -6,7 +6,10 @@
   --accent-secondary: #ffc8dd;
   font-family: 'Quicksand', sans-serif;
 }
-
+.app-container {
+  margin: 0 5vw; 
+  padding: 0 24px;  
+}
 .manager-page-header .user-page-header {
   font-size: 1.5rem;
   line-height: 1.1rem;
