@@ -13,6 +13,7 @@ import {
   fetchUsers,
   createEvent,
   deleteEvent,
+  updateEvent,
 } from "../controller/userManagerController.jsx";
 
 import "../App.css";
@@ -86,7 +87,13 @@ const ManagerPage = () => {
             <h2>Add Event</h2>
             <EventForm
               initialEvent={editingEvent}
-              eventOnSubmit={(eventData) => createEvent(dispatch, eventData)}
+              eventOnSubmit={(eventData) => {
+                if (editingEvent) {
+                  updateEvent(dispatch, editingEvent.id, eventData);
+                } else {
+                  createEvent(dispatch, eventData);
+                }
+              }}
               onClose={() =>
                 dispatch({ type: ACTIONS.setShowEventForm, payload: false })
               }

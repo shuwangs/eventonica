@@ -99,3 +99,35 @@ export const deleteEvent = async (dispatch, id) => {
 
   console.log("delete function");
 };
+
+export const updateEvent = async (dispatch, id, eventData) => {
+  console.log("passed in id:", id);
+  console.log("passed in eventData:", eventData);
+  dispatch({ type: ACTIONS.setLoading, payload: true });
+  dispatch({ type: ACTIONS.setError, payload: null });
+
+  const formatedData = { ...eventData, id: Number(id) };
+
+  try {
+    const response = await fetch(`/api/events/${Number(id)}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formatedData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to update event");
+    }
+
+    const updatedEvent = await response.json();
+    console.log(updatedEvent);
+
+    // Update the frontend
+    dispatch({ type: ACTIONS.updateEvent, payload: updatedEvent });
+    dispatch({ type: ACTIONS.setShowEventForm, payload: false });
+  } catch (err) {
+    dispatch({ type: ACTIONS.setError, payload: err.message });
+  } finally {
+    dispatch({ type: ACTIONS.setLoading, payload: false });
+  }
+};

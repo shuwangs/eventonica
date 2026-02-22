@@ -69,4 +69,26 @@ app.post("/api/events", async (req, res) => {
     }
 })
 
+app.put("/api/events/:id", async (req, res) => {
+    const eventData = req.body;
+    const {id, name, event_date_time, location, category, description} = req.body;
+
+    try{
+        const result = await eventService.updateEvent({id, name, event_date_time, location, description, category});
+        
+        if (!result) {
+            return res.status(404).json({ error: "Event not found" });
+        }
+        console.log(`the events are : \n ${result}`);
+
+        res.json(result);
+
+    } catch(err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to delte events." });
+
+    }
+})
+
+
 export default app;

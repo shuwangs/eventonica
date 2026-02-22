@@ -57,8 +57,8 @@ export const DELETE_EVENT = `
 `;
 
 export const UPDATE_EVENT = `
-    UPDATE events
-    SET name = $2, event_date_time = $3, location = $4, description = $5
+    UPDATE eventsdb.events
+    SET name = $2, event_date_time = $3, location = $4, category = $5, description = $6
     WHERE id = $1
     RETURNING *;
 `;

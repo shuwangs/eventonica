@@ -31,27 +31,13 @@ const addEvent = async ({ name, event_date_time, location, category, description
     return result.rows;
 }
 
-const updateEvent = async ({ id, name, event_date_time, location, description, categoryName}) => {
-    const client = await pool.connect();
+const updateEvent = async ({ id, name, event_date_time, location, category, description}) => {
 
-    try{
-        await client.query("BEGIN");
-        
-        const updatedRes = await client.query(sql_queries.UPDATE_EVENT, 
-            [name, event_date_time, location, description ]);
-
-        await client.query(sql_queries.ADD_EVENT_CATEGORY, [id, categoryId]);
-
-        await client.query("COMMIT");
-
-        return finalRes.rows[0];
-    } catch(err) {
-        console.log(err);
-        await client.query("ROLLBACK");
-    } finally {
-        client.release();
-    }
-
+    const updatedRes = await pool.query(sql_queries.UPDATE_EVENT, 
+        [id, name, event_date_time, location, category, description ]);
+    if (updatedRes.rows.length === 0) return null;
+    
+    return updatedRes.rows[0];
 }
 
 // TODO: delete event;
