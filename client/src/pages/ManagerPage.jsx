@@ -22,7 +22,14 @@ import "./ManagerPage.css";
 const ManagerPage = () => {
   // TODO:
   // 2. Implement search functionality for events and users
-
+  const categories = [
+    "Networking",
+    "Education",
+    "Career",
+    "Tech",
+    "Workshop",
+    "Community",
+  ];
   const [state, dispatch] = useReducer(managerReducer, initialState);
 
   const { events, users, error, loading, editingEvent, ui } = state;

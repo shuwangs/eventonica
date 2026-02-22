@@ -43,3 +43,10 @@
   background-color: var(--accent-primary);
   color: #fff
 }
+
+.select-style {
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 10px 20px;
+
+}

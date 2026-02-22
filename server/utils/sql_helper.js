@@ -121,7 +121,3 @@ export const DELETE_CATEGORY = `
     WHERE id = $1
     RETURNING *;
 `;
-
-export const GET_ALL_CATEGORY = `
-    SELECT name FROM eventsdb.categories
-`;

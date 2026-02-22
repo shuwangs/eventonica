@@ -17,8 +17,17 @@ const EventForm = ({ eventOnSubmit, onClose, initialEvent = null }) => {
     category: "",
     description: "",
   };
+
   const [event, handleOnChange, resetForm] = useForm(initalData);
 
+  const categories = [
+    "Networking",
+    "Education",
+    "Career",
+    "Tech",
+    "Workshop",
+    "Community",
+  ];
   useEffect(() => {
     if (initialEvent) {
       resetForm({
@@ -99,15 +108,25 @@ const EventForm = ({ eventOnSubmit, onClose, initialEvent = null }) => {
         />
 
         <label htmlFor="event-category"> Category*</label>
-        <input
-          className="input-style"
-          type="text"
+
+        <select
+          className="input-style select-style"
           id="event-category"
           name="category"
           value={event.category}
           onChange={handleOnChange}
           required
-        />
+        >
+          <option value="" disabled>
+            Select category
+          </option>
+
+          {categories.map((cat) => (
+            <option className="select-style" key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
 
         <div className="btn-group">
           <button type="submit" className="save-btn btn-primary">

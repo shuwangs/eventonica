@@ -87,3 +87,9 @@
   background-color: var(--accent-secondary);
   transform: scale(1.05);
 }
+
+.select-style {
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 10px 20px;
+}
