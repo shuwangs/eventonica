@@ -19,6 +19,7 @@ const UserPage = () => {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [showFavOnly, setShowFavOnly] = useState(false);
   const [userFavEvents, setUserFavEvents] = useState([]);
+  const [eventCategories, setEventCategories] = useState([]);
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
 
@@ -26,6 +27,7 @@ const UserPage = () => {
     console.log("calling fetchEvents...");
     fetchEvents(dispatch);
     fetchUsers(dispatch);
+    fetchCategories();
   }, []);
 
   useEffect(() => {
@@ -47,6 +49,19 @@ const UserPage = () => {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch(`/api/categories`);
+      if (!response.ok) {
+        throw new Error("Failed to get event category");
+      }
+      const data = await response.json();
+      console.log("categories include: ", data);
+      setEventCategories(data);
+    } catch (err) {
+      setError(err.message);
     }
   };
 

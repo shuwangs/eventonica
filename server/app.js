@@ -144,9 +144,18 @@ app.delete("/api/users/:user_id/favorites/:event_id", async (req, res) => {
 
     } catch(err) {
         console.error(err);
-        res.status(500).json({ error: "Failed to delte events." });
+        res.status(500).json({ error: "Failed to delete user favorite event." });
 
     }
 })
 
+app.get('/api/categories', async (req, res) => {
+    try {
+        const result = await eventService.getAllCategories();
+        res.json(result);
+    }catch(err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to get event categories." });
+    }
+})
 export default app;
