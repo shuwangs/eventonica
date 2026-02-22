@@ -16,7 +16,7 @@ import "./ManagerPage.css";
 
 const UserPage = () => {
   const [state, dispatch] = useReducer(managerReducer, initialState);
-  const [currentUserId, setCurrentUserId] = useState(null);
+  const [currentUserId, setCurrentUserId] = useState("");
   const [showFavOnly, setShowFavOnly] = useState(false);
   const [userFavEvents, setUserFavEvents] = useState([]);
   const [eventCategories, setEventCategories] = useState([]);
@@ -146,10 +146,6 @@ const UserPage = () => {
     return events.filter((event) => event.category === cat);
   };
 
-  // const displayedEvents = showFavOnly
-  //   ? showFavorite(state.events)
-  //   : state.events;
-
   const displayedEvents = useMemo(() => {
     const byCategory = getEventByCategory(state.events, activeCategory);
 
@@ -167,9 +163,13 @@ const UserPage = () => {
         <div className="user-page-welcome">
           <div>Hello</div>
           <select
+            className="select-style"
             value={currentUserId}
             onChange={(e) => setCurrentUserId(Number(e.target.value))}
           >
+            <option value="" disabled>
+              Dear friend
+            </option>
             {state.users.map((user) => (
               <option key={user.id} value={user.id}>
                 {user.name}
