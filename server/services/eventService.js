@@ -10,7 +10,7 @@ const getAllEvents = async () => {
     return result.rows;
 }
 const getAllCategories = async () => {
-    const result = await pool.query(sql_queries.GET_ALL_CATEGORY);
+    const result = await pool.query(sql_queries.GET_ALL_CATEGORIES);
     console.log(result.rows);
     return result.rows;
 }

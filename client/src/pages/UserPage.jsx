@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from "react";
+import React, { useState, useReducer, useEffect, useMemo } from "react";
 import UserEventList from "../components/UserEventList";
 import {
   managerReducer,
@@ -35,6 +35,10 @@ const UserPage = () => {
     if (!currentUserId) return;
     fetchUserFavorite(currentUserId);
   }, [currentUserId]);
+
+  useEffect(() => {
+    console.log("total events are: ", state.events);
+  }, [state]);
 
   const fetchUserFavorite = async (currentUserId) => {
     setLoading(true);
@@ -126,19 +130,32 @@ const UserPage = () => {
     return filteredEvents;
   };
 
-  const displayedEvents = showFavOnly
-    ? showFavorite(state.events)
-    : state.events;
-
   const toggleHeartBtn = (event_id) => {
     if (!currentUserId) return;
-    const isFav = userFavEvents.some((f) => f.event_id === event_id);
+    const isFav = userFavEvents.some((f) => f.event_id === Number(event_id));
     if (isFav) {
       return deleteUserFavorite(currentUserId, event_id);
     } else {
       return addUserFavorite(currentUserId, event_id);
     }
   };
+
+  const getEventByCategory = (events, cat) => {
+    console.log("trying to get category id:", cat);
+    if (cat === "All") return events;
+    return events.filter((event) => event.category === cat);
+  };
+
+  // const displayedEvents = showFavOnly
+  //   ? showFavorite(state.events)
+  //   : state.events;
+
+  const displayedEvents = useMemo(() => {
+    const byCategory = getEventByCategory(state.events, activeCategory);
+
+    if (!showFavOnly) return byCategory;
+    return showFavorite(byCategory);
+  }, [state.events, activeCategory, showFavOnly, userFavEvents]);
 
   return (
     <div className="user-page-container">
@@ -182,10 +199,18 @@ const UserPage = () => {
 
       {/*  filter by category */}
       <div className="category-filter-bar">
+        <button
+          key="all"
+          className={`category-filter-btn ${activeCategory === "All" ? "active" : ""}`}
+          onClick={() => setActiveCategory("All")}
+        >
+          All
+        </button>
+
         {eventCategories.map((cat) => (
           <button
             className={`category-filter-btn ${activeCategory === cat ? "active" : ""}`}
-            onClick={() => setActiveCategory(cat)}
+            onClick={() => setActiveCategory(cat.name)}
           >
             {cat.name}
           </button>
