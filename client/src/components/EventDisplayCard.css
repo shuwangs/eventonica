@@ -1,0 +1,27 @@
+.event-card{
+    background-color: #fff;
+    border: 3px dashed var(--accent-primary);
+    border-radius: 10px;
+    max-width: 300px;
+    padding: 8px 10px
+
+}
+
+.event-display-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.heart-btn {
+    border:none;
+    background: none
+}
+
+.user-event-list{
+    margin-top:  30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+
+}

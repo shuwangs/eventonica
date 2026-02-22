@@ -105,9 +105,7 @@ export const updateEvent = async (dispatch, id, eventData) => {
   console.log("passed in eventData:", eventData);
   dispatch({ type: ACTIONS.setLoading, payload: true });
   dispatch({ type: ACTIONS.setError, payload: null });
-
   const formatedData = { ...eventData, id: Number(id) };
-
   try {
     const response = await fetch(`/api/events/${Number(id)}`, {
       method: "PUT",
