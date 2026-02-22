@@ -20,6 +20,7 @@ const UserPage = () => {
   const [showFavOnly, setShowFavOnly] = useState(false);
   const [userFavEvents, setUserFavEvents] = useState([]);
   const [eventCategories, setEventCategories] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("All");
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
 
@@ -168,15 +169,27 @@ const UserPage = () => {
           type="text"
           placeholder="Search events..."
         />
-        <button className="btn-primary show-categories-btn">
+        {/* <button className="btn-primary show-categories-btn">
           All Categories{" "}
-        </button>
+        </button> */}
         <button
           className="btn-primary show-favorites-btn"
           onClick={() => setShowFavOnly(!showFavOnly)}
         >
           {showFavOnly ? "Show All" : "Show Favorites"}
         </button>
+      </div>
+
+      {/*  filter by category */}
+      <div className="category-filter-bar">
+        {eventCategories.map((cat) => (
+          <button
+            className={`category-filter-btn ${activeCategory === cat ? "active" : ""}`}
+            onClick={() => setActiveCategory(cat)}
+          >
+            {cat.name}
+          </button>
+        ))}
       </div>
 
       <UserEventList

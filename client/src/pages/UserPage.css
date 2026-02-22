@@ -29,3 +29,34 @@
 .user-page-welcome option {
   height: 20px;
 }
+
+.category-filter-bar {
+  display: flex;
+  gap: 15px;
+  margin: 12px 0;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  color: var(--text-primary);
+  justify-content: center;
+
+}
+
+.category-filter-btn {
+  padding: 8px 16px;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 2px solid var(--border-edge);
+  background-color: var(--accent-secondary) ;
+}
+
+.category-filter-btn:hover {
+  background-color: var(--accent-primary) ;
+  transform: translateY(-1px);
+}
+
+.category-filter-btn.active {
+  background: var(--accent-primary);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 10px rgba(255, 94, 98, 0.3);
+}
