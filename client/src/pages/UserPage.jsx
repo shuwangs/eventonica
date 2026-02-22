@@ -1,6 +1,5 @@
 import React, { useState, useReducer, useEffect } from "react";
 import UserEventList from "../components/UserEventList";
-import * as helper from "../utils/helper.jsx";
 import {
   managerReducer,
   initialState,
@@ -30,13 +29,9 @@ const UserPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log("UserPage events updated:", state.events);
-  }, [state.events]);
-
-  useEffect(() => {
     if (!currentUserId) return;
     fetchUserFavorite(currentUserId);
-  }, [currentUserId, userFavEvents]);
+  }, [currentUserId]);
 
   const fetchUserFavorite = async (currentUserId) => {
     setLoading(true);
@@ -68,7 +63,10 @@ const UserPage = () => {
         throw new Error("Failed to post user favorites event");
       }
       const data = await response.json();
-      setUserFavEvents(data);
+      setUserFavEvents((prev) => [
+        ...prev,
+        { user_id: currentUserId, event_id: event_id },
+      ]);
     } catch (err) {
       setLoading(false);
       setError(err.message);
@@ -90,7 +88,10 @@ const UserPage = () => {
         throw new Error("Failed to delete favorite");
       }
       const data = await response.json();
-      setUserFavEvents(data);
+
+      setUserFavEvents((prev) => {
+        return prev.filter((fav) => Number(fav.event_id) !== Number(event_id));
+      });
     } catch (err) {
       setLoading(false);
       setError(err.message);

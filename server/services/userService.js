@@ -27,11 +27,15 @@ const addUserFavorites = async(user_id, event_id) => {
     const result = await pool.query(sql_queries.ADD_USER_FAVORITE, [user_id, event_id])
     return result.rows;
 }
-
+const deleteUserFavorites = async(user_id, event_id) => {
+    const result = await pool.query(sql_queries.DELETE_USER_FAVORITE, [user_id, event_id])
+    return result.rows;
+}
 export default {
     getAllUsers,
     addUser,
     deleteUser,
     getUserFavorites,
-    addUserFavorites
+    addUserFavorites,
+    deleteUserFavorites
 };

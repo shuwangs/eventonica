@@ -25,3 +25,10 @@
     gap: 16px;
 
 }
+
+.heart-btn:hover{
+    color:red
+}
+.heart-btn.is-fav {
+  color: red;
+}

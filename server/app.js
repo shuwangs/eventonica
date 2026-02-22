@@ -112,8 +112,7 @@ app.get("/api/users/:userId/favorites", async (req, res) => {
 })
 
 
-app.post("/api/users/:userId/favorites", async (req, res) => {
-    const userId = Number(req.params.userId);
+app.post("/api/users/:user_id/favorites", async (req, res) => {
     const {user_id, event_id } = req.body;
 
     console.log(`the users are to be deleted,`, user_id);
@@ -129,6 +128,23 @@ app.post("/api/users/:userId/favorites", async (req, res) => {
     } catch(err) {
         console.error(err);
         res.status(500).json({ error: "Failed to add favorite events." });
+
+    }
+})
+
+
+app.delete("/api/users/:user_id/favorites/:event_id", async (req, res) => {
+    const {user_id, event_id} = req.params;
+    console.log("to delter fav user", user_id);
+    console.log("to delter fav event", event_id);
+
+    try {
+        const result = await userService.deleteUserFavorites(user_id, event_id);
+        res.json(result);
+
+    } catch(err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to delte events." });
 
     }
 })
