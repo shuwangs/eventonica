@@ -1,13 +1,15 @@
 import { NavLink } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-
+import "./TopNav.css";
 const TopNav = () => {
   return (
     <Navbar className="top-nav">
-      <Navbar.Brand href="#">🌸 EventHub</Navbar.Brand>
+      <Navbar.Brand className="brand" href="#">
+        🌸 EventHub
+      </Navbar.Brand>
 
-      <Nav>
+      <Nav className="nav-links">
         <NavLink to="/admin" className="nav-link">
           Admin
         </NavLink>
