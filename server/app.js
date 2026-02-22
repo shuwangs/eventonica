@@ -91,4 +91,46 @@ app.put("/api/events/:id", async (req, res) => {
 })
 
 
+// Get user favoritates event id
+
+app.get("/api/users/:userId/favorites", async (req, res) => {
+    const userId = Number(req.params.userId);
+    console.log(`the id to be deleted ${userId}`);
+    try {
+        const result = await userService.getUserFavorites(userId);
+        if (!result) {
+            return res.status(404).json({ error: "Favorite events not found" });
+        }
+        console.log(`the events are : \n ${result}`);
+
+        res.json(result);
+    } catch(err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to delte events." });
+
+    }
+})
+
+
+app.post("/api/users/:userId/favorites", async (req, res) => {
+    const userId = Number(req.params.userId);
+    const {user_id, event_id } = req.body;
+
+    console.log(`the users are to be deleted,`, user_id);
+    console.log(`the users add into favoriate list`, event_id )
+    try {
+        const result = await userService.addUserFavorites(user_id, event_id);
+        if (!result) {
+            return res.status(404).json({ error: "add to favorite not found" });
+        }
+        console.log(`the events are : \n ${result}`);
+
+        res.json(result);
+    } catch(err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to add favorite events." });
+
+    }
+})
+
 export default app;

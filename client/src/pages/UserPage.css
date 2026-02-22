@@ -4,6 +4,7 @@
   font-size: 1.5rem;
   line-height: 1.1rem;
   border-bottom: 2px solid var(--border-edge);
+  justify-content: space-between;
 }
 
 .input-style {
@@ -17,4 +18,14 @@
   gap: 20px;
   justify-content: center;
   /* align-items: center; */
+}
+
+.user-page-welcome {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+.user-page-welcome option {
+  height: 20px;
 }

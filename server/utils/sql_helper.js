@@ -26,10 +26,8 @@ export const ADD_USER_FAVORITE = `
 `;
 
 export const GET_USER_FAVORITES = `
-    SELECT uf.user_id, uf.event_id, e.name, e.event_date_time, e.location,e.description, ec.name AS category_name
-    FROM eventsdb.user_favorites AS uf
-    LEFT JOIN eventsdb.events AS e ON uf.event_id = e.id
-    LEFT JOIN eventsdb.events_categories AS ec ON e.id = ec.event_id
+    SELECT event_id
+    FROM eventsdb.user_favorites
     WHERE user_id = $1
 `;
 
