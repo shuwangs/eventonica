@@ -100,6 +100,20 @@ const UserPage = () => {
     }
   };
 
+  const showFavorite = (events) => {
+    const filteredEvents = events.filter((event) => {
+      return userFavEvents.some(
+        (fav) => Number(fav.event_id) === Number(event.id),
+      );
+    });
+
+    return filteredEvents;
+  };
+
+  const displayedEvents = showFavOnly
+    ? showFavorite(state.events)
+    : state.events;
+
   const toggleHeartBtn = (event_id) => {
     if (!currentUserId) return;
     const isFav = userFavEvents.some((f) => f.event_id === event_id);
@@ -142,13 +156,16 @@ const UserPage = () => {
         <button className="btn-primary show-categories-btn">
           All Categories{" "}
         </button>
-        <button className="btn-primary show-favorites-btn">
-          Show Favorites
+        <button
+          className="btn-primary show-favorites-btn"
+          onClick={() => setShowFavOnly(!showFavOnly)}
+        >
+          {showFavOnly ? "Show All" : "Show Favorites"}
         </button>
       </div>
 
       <UserEventList
-        events={state.events}
+        events={displayedEvents}
         userFavEvents={userFavEvents}
         onToggleFavorite={toggleHeartBtn}
       />
