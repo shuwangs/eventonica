@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useForm from "../hooks/useForm";
 import Form from "react-bootstrap/Form";
-import {
-  managerReducer,
-  initialState,
-  ACTIONS,
-} from "../hooks/managerReducer.jsx";
+import { appReducer, initialState, ACTIONS } from "../hooks/appReducer.jsx";
 import "./EventForm.css";
 
 const EventForm = ({ eventOnSubmit, onClose, initialEvent = null }) => {

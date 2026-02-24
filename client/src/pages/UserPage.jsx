@@ -1,36 +1,48 @@
 import React, { useState, useReducer, useEffect, useMemo } from "react";
 import UserEventList from "../components/UserEventList";
-import {
-  managerReducer,
-  initialState,
-  ACTIONS,
-} from "../hooks/managerReducer.jsx";
-import {
-  fetchEvents,
-  fetchUsers,
-} from "../controller/userManagerController.jsx";
+import { appReducer, initialState, ACTIONS } from "../hooks/appReducer.jsx";
+import { fetchEvents, searchEvents } from "../controller/eventsController.jsx";
+import { fetchCategories } from "../controller/categoriesController.jsx";
 
+import { fetchUsers } from "../controller/userController.jsx";
 import "../App.css";
 import "./UserPage.css";
 import "./ManagerPage.css";
 
 const UserPage = () => {
-  const [state, dispatch] = useReducer(managerReducer, initialState);
+  const [state, dispatch] = useReducer(appReducer, initialState);
+  const { eventsAll, users } = state.data;
+  const { loading, error } = state.status;
+
   const [currentUserId, setCurrentUserId] = useState("");
   const [showFavOnly, setShowFavOnly] = useState(false);
   const [userFavEvents, setUserFavEvents] = useState([]);
   const [eventCategories, setEventCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
-  const [loading, setLoading] = useState(null);
-  const [error, setError] = useState(null);
+
   const [searchText, setSearchText] = useState("");
 
+  // useEffect(() => {
+  //   console.log("calling fetchEvents...");
+  //   fetchEvents(dispatch);
+  //   fetchUsers(dispatch);
+  // }, []);
+
   useEffect(() => {
-    console.log("calling fetchEvents...");
-    fetchEvents(dispatch);
-    fetchUsers(dispatch);
-    fetchCategories();
-  }, []);
+    const init = async () => {
+      try {
+        await fetchEvents(dispatch);
+        await fetchUsers(dispatch);
+
+        const cats = await fetchCategories();
+        setEventCategories(cats);
+      } catch (err) {
+        dispatch({ type: ACTIONS.setError, payload: err.message });
+      }
+    };
+
+    init();
+  }, [dispatch]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -39,7 +51,7 @@ const UserPage = () => {
         return;
       }
 
-      onSearch(searchText.trim(), activeCategory);
+      searchEvents(dispatch, searchText.trim(), activeCategory);
     }, 300);
     return () => clearTimeout(timer);
   }, [searchText, activeCategory]);
@@ -49,34 +61,34 @@ const UserPage = () => {
     fetchUserFavorite(currentUserId);
   }, [currentUserId]);
 
-  const onSearch = async (queryText, category) => {
-    try {
-      setLoading(true);
-      setError(null);
+  // const searchEvents = async (queryText, category) => {
+  //   dispatch({ type: ACTIONS.setError, payload: null });
+  //   dispatch({ type: ACTIONS.setLoading, payload: true });
+  //   try {
+  //     const params = new URLSearchParams();
+  //     if (queryText) params.append("q", queryText);
+  //     if (category && category === "All") params.append("category", category);
+  //     console.log("querytext front is: ", queryText);
+  //     console.log("query category is: ", category);
+  //     console.log(params.toString());
 
-      const params = new URLSearchParams();
-      if (queryText) params.append("q", queryText);
-      if (category && category === "All") params.append("category", category);
-      console.log("querytext front is: ", queryText);
-      console.log("query category is: ", category);
-      console.log(params.toString());
+  //     const response = await fetch(`/api/events/search?${params.toString()}`);
 
-      const response = await fetch(`/api/events/search?${params.toString()}`);
+  //     if (!response.ok) throw new Error("Search failed");
 
-      if (!response.ok) throw new Error("Search failed");
-
-      const data = await response.json();
-      console.log("searched events: ", data);
-      dispatch({ type: ACTIONS.setEvents, payload: data });
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     const data = await response.json();
+  //     console.log("searched events: ", data);
+  //     dispatch({ type: ACTIONS.setEvents, payload: data });
+  //   } catch (err) {
+  //     setError(err.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const fetchUserFavorite = async (currentUserId) => {
-    setLoading(true);
+    dispatch({ type: ACTIONS.setError, payload: null });
+    dispatch({ type: ACTIONS.setLoading, payload: true });
     try {
       const response = await fetch(`/api/users/${currentUserId}/favorites`);
       if (!response.ok) {
@@ -85,28 +97,15 @@ const UserPage = () => {
       const data = await response.json();
       setUserFavEvents(data);
     } catch (err) {
-      setLoading(false);
-      setError(err.message);
+      dispatch({ type: ACTIONS.setError, payload: err.message });
     } finally {
-      setLoading(false);
-    }
-  };
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch(`/api/categories`);
-      if (!response.ok) {
-        throw new Error("Failed to get event category");
-      }
-      const data = await response.json();
-      console.log("categories include: ", data);
-      setEventCategories(data);
-    } catch (err) {
-      setError(err.message);
+      dispatch({ type: ACTIONS.setLoading, payload: false });
     }
   };
 
   const addUserFavorite = async (currentUserId, event_id) => {
-    setLoading(true);
+    dispatch({ type: ACTIONS.setError, payload: null });
+    dispatch({ type: ACTIONS.setLoading, payload: true });
     console.log("adding to the user favorite");
     try {
       const response = await fetch(`/api/users/${currentUserId}/favorites`, {
@@ -123,15 +122,15 @@ const UserPage = () => {
         { user_id: currentUserId, event_id: event_id },
       ]);
     } catch (err) {
-      setLoading(false);
-      setError(err.message);
+      dispatch({ type: ACTIONS.setError, payload: null });
     } finally {
-      setLoading(false);
+      dispatch({ type: ACTIONS.setLoading, payload: false });
     }
   };
   const deleteUserFavorite = async (currentUserId, event_id) => {
     console.log("deleting from the user favorite");
-
+    dispatch({ type: ACTIONS.setError, payload: null });
+    dispatch({ type: ACTIONS.setLoading, payload: true });
     try {
       const response = await fetch(
         `/api/users/${currentUserId}/favorites/${event_id}`,
@@ -148,10 +147,9 @@ const UserPage = () => {
         return prev.filter((fav) => Number(fav.event_id) !== Number(event_id));
       });
     } catch (err) {
-      setLoading(false);
-      setError(err.message);
+      dispatch({ type: ACTIONS.setError, payload: err.message });
     } finally {
-      setLoading(false);
+      dispatch({ type: ACTIONS.setLoading, payload: false });
     }
   };
 
@@ -182,11 +180,11 @@ const UserPage = () => {
   };
 
   const displayedEvents = useMemo(() => {
-    const byCategory = getEventByCategory(state.events, activeCategory);
+    const byCategory = getEventByCategory(eventsAll, activeCategory);
 
     if (!showFavOnly) return byCategory;
     return showFavorite(byCategory);
-  }, [state.events, activeCategory, showFavOnly, userFavEvents]);
+  }, [eventsAll, activeCategory, showFavOnly, userFavEvents]);
 
   return (
     <div className="user-page-container">
@@ -205,7 +203,7 @@ const UserPage = () => {
             <option value="" disabled>
               Dear friend
             </option>
-            {state.users.map((user) => (
+            {users.map((user) => (
               <option key={user.id} value={user.id}>
                 {user.name}
               </option>

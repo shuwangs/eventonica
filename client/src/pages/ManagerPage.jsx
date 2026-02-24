@@ -3,34 +3,30 @@ import UserRegisterForm from "../components/UserRegisterForm";
 import EventList from "../components/EventList";
 import EventForm from "../components/EventForm.jsx";
 import UserList from "../components/UserList.jsx";
-import {
-  managerReducer,
-  initialState,
-  ACTIONS,
-} from "../hooks/managerReducer.jsx";
+import { appReducer, initialState, ACTIONS } from "../hooks/appReducer.jsx";
 import {
   fetchEvents,
-  fetchUsers,
   createEvent,
   deleteEvent,
   updateEvent,
-} from "../controller/userManagerController.jsx";
+} from "../controller/eventsController.jsx";
+import { fetchUsers } from "../controller/userController.jsx";
 
 import "../App.css";
 import "./ManagerPage.css";
 
 const ManagerPage = () => {
-  // TODO:
-  // 2. Implement search functionality for events and users
+  const [state, dispatch] = useReducer(appReducer, initialState);
+  const { eventsAll, users } = state.data;
+  const { loading, error } = state.status;
+  const { activeTab, showEventForm, editingEvent } = state.ui.manager;
 
-  const [state, dispatch] = useReducer(managerReducer, initialState);
-
-  const { events, users, error, loading, editingEvent, ui } = state;
+  // const { events, users, error, loading, editingEvent, ui } = state;
 
   useEffect(() => {
     fetchEvents(dispatch);
     fetchUsers(dispatch);
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="manager-page-container">
@@ -41,7 +37,7 @@ const ManagerPage = () => {
       {/* Manager Tabs */}
       <div className="manager-page-tabs">
         <button
-          className={`btn-tab ${ui.activeTab === "events" ? "active" : ""}`}
+          className={`btn-tab ${activeTab === "events" ? "active" : ""}`}
           onClick={() =>
             dispatch({ type: ACTIONS.setActiveTab, payload: "events" })
           }
@@ -49,7 +45,7 @@ const ManagerPage = () => {
           Events
         </button>
         <button
-          className={`btn-tab ${ui.activeTab === "users" ? "active" : ""}`}
+          className={`btn-tab ${activeTab === "users" ? "active" : ""}`}
           onClick={() =>
             dispatch({ type: ACTIONS.setActiveTab, payload: "users" })
           }
@@ -81,7 +77,7 @@ const ManagerPage = () => {
       {loading && <p>Loading...</p>}
 
       {/* Popup Window */}
-      {ui.showEventForm && (
+      {showEventForm && (
         <div className="modal-overlay">
           <div className="modal">
             <h2>Add Event</h2>
@@ -103,9 +99,9 @@ const ManagerPage = () => {
       )}
 
       {/* Show the Events  */}
-      {ui.activeTab === "events" && (
+      {activeTab === "events" && (
         <EventList
-          events={events}
+          events={eventsAll}
           onDelete={(id) => deleteEvent(dispatch, id)}
           onEdit={(eventData) => {
             dispatch({ type: ACTIONS.setEditingEvent, payload: eventData });
@@ -116,7 +112,7 @@ const ManagerPage = () => {
 
       {/* Show the users */}
 
-      {ui.activeTab === "users" && <UserList users={users} />}
+      {activeTab === "users" && <UserList users={users} />}
     </div>
   );
 };
