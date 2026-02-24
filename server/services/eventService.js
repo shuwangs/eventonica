@@ -46,6 +46,15 @@ const deleteEvent = async (id) => {
     return res.rows;
 }
 
+const searchEvents = async (queryText, category) => {
+    const keyword = queryText ? `%${queryText}%` : null;
+    const cat = category && category !== "All" ? category : null;
+    console.log("category in userService is:", category);
+    const res = await pool.query(sql_queries.SEARCH_EVENTS, [keyword, cat]);
+    console.log(res.rows);
+    return res.rows;
+}
+
 export default {
     getAllEvents, 
     getAllCategories,
@@ -53,5 +62,6 @@ export default {
     getEventByDate,
     addEvent,
     updateEvent,
-    deleteEvent
+    deleteEvent,
+    searchEvents
 }

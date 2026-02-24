@@ -121,3 +121,10 @@ export const DELETE_CATEGORY = `
     WHERE id = $1
     RETURNING *;
 `;
+
+export const SEARCH_EVENTS =`
+SELECT id, name, event_date_time, location, category, description
+FROM eventsdb.events
+WHERE ($1::text IS NULL OR name ILIKE $1 OR location ILIKE $1 OR description ILIKE $1 )
+AND ($2::text IS NULL OR category = $2)
+` 

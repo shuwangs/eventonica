@@ -22,6 +22,7 @@ export const ACTIONS = {
   setLoading: "setLoading",
   setEditingEvent: "setEditingEvent",
   setShowEventForm: "setShowEventForm",
+  setEvents: "setEvents",
 };
 
 export function managerReducer(state, action) {
@@ -69,7 +70,11 @@ export function managerReducer(state, action) {
         ),
         editingEvent: null,
       };
-
+    case ACTIONS.setEvents:
+      return {
+        ...state,
+        events: action.payload,
+      };
     default:
       return state;
   }

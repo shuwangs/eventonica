@@ -23,6 +23,7 @@ const UserPage = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     console.log("calling fetchEvents...");
@@ -32,13 +33,47 @@ const UserPage = () => {
   }, []);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!searchText.trim() && activeCategory === "All") {
+        fetchEvents(dispatch);
+        return;
+      }
+
+      onSearch(searchText.trim(), activeCategory);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchText, activeCategory]);
+
+  useEffect(() => {
     if (!currentUserId) return;
     fetchUserFavorite(currentUserId);
   }, [currentUserId]);
 
-  useEffect(() => {
-    console.log("total events are: ", state.events);
-  }, [state]);
+  const onSearch = async (queryText, category) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const params = new URLSearchParams();
+      if (queryText) params.append("q", queryText);
+      if (category && category === "All") params.append("category", category);
+      console.log("querytext front is: ", queryText);
+      console.log("query category is: ", category);
+      console.log(params.toString());
+
+      const response = await fetch(`/api/events/search?${params.toString()}`);
+
+      if (!response.ok) throw new Error("Search failed");
+
+      const data = await response.json();
+      console.log("searched events: ", data);
+      dispatch({ type: ACTIONS.setEvents, payload: data });
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchUserFavorite = async (currentUserId) => {
     setLoading(true);
@@ -185,6 +220,8 @@ const UserPage = () => {
           className="input-style search-input"
           type="text"
           placeholder="Search events..."
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
         />
         {/* <button className="btn-primary show-categories-btn">
           All Categories{" "}

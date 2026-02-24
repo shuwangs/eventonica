@@ -19,7 +19,7 @@
 
 - [ ] Debounced search（300ms）
 
-- [ ] fuzzy match, 
+- [ ] subString match
 
 - [ ] Calendar view
   

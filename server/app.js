@@ -158,4 +158,19 @@ app.get('/api/categories', async (req, res) => {
         res.status(500).json({ error: "Failed to get event categories." });
     }
 })
+
+app.get('/api/events/search', async (req, res) => {
+    console.log(req.query);
+    const queryText = (req.query.q || "").toString().trim();
+    const category = (req.query.category || "All").toString().trim();
+    console.log("queryText is: ", queryText);
+    console.log("query category is: ", category);
+    try {
+        const events = await eventService.searchEvents(queryText, category);
+        res.json(events);
+    } catch (err) {
+        console.error("Search events failed:", err);
+        res.status(500).json({ error: "Failed to search events" });
+    }
+})
 export default app;
