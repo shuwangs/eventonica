@@ -1,55 +1,56 @@
 # eventonica
 
-## MVP
-- [ ] Add / Delete
+## How to start?
 
-- [ ] Search by date
+### Database Setup
+You can initilize the database using either method below
 
-- [ ] Search by category
+#### Method 1: Restore from dump(recommended)
+```bash
+# Drop database if it exists
+dropdb --if-exists eventonica
 
-- [ ] useReducer（ actions/state）
+# Create a fresh database
+createdb eventonica
 
-- [ ] tests + README
+# Restore database from dump
+psql -d eventonica -f server/db/db_dump.sql
+```
 
-## Nice to have
+#### Method 2: Run schema + seed manually
+```bash
+# Drop database if it exists
+dropdb --if-exists eventonica
 
-- [ ] ⭐ Favorite Events
+# Create database
+createdb eventonica
 
-- [ ] Upcoming / Past Events 
+# Create schema and tables
+psql -d eventonica -f server/db/schema.sql
 
-- [ ] Debounced search（300ms）
+# Insert seed data
+psql -d eventonica -f server/db/seed.sql
+```
 
-- [ ] subString match
+### Environment Variable
+Create a .env file inside the `server` folder:
+```bash
+DATABASE_URL=postgresql://localhost:5432/eventonica
+PORT=3001
+```
 
-- [ ] Calendar view
-  
-## Component Hierarchy
-- App (State Center):  useReducer，manage all the state
+### Start the App
+```bash
+# Start backend
+cd server
+npm install
+npm run dev
 
-- SearchBar: user's input deal with  Debounced Search。
+# Start frontend
+cd ../client
+npm install
+npm run dev
+```
 
-- EventForm:  Add Event logic。
-
-- EventList:  Upcoming / Past , update, delete
-
-- EventCard: 
-
----
-
-## APIs
-
-### Users:
-- POST /api/users  --- add user
-- DELETE /api/users/:id --- delete user
-
-
-### event owner
-- GET /api/events --- get all events. SELECT * FROM events
-- POST /api/events  --- add new events INSERT INTO events
-- GET /api/events?query* -- supporting search event. SELECT WHERE *** FROM events
-- DELETE /api/events/:id. -- DELETE where id = eventID from events;
-
-### favorite 
-- Get /api/users/:userId/favorites --- a user's favorite list
-- POST /api/:userId/favorites     --- INSERT INTO favorites (u_id, e_id)
-- DELETE /api/:userId/favorites/:eventId  --- DELETE FROM favorites (u_id, e_id)
+### Note
+If you encounter database permission or role errors, ensure PostgreSQL is installed and running, and your local user has permission to create databases.

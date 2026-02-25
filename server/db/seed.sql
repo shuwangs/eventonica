@@ -29,5 +29,9 @@ VALUES
 INSERT INTO users (name, email, is_manager)
 VALUES
 ('Bobo Manager', 'alice@example.com', TRUE),
-('Bob User', 'bob@example.com', FALSE)
+('Bob User', 'test1@example.com', FALSE),
+('Bobo User', 'test1@example.com', FALSE),
+('Test1 User', 'test2@example.com', FALSE),
+('Test2 User', 'test3@example.com', FALSE),
+('Test3 User', 'test4@example.com', FALSE)
 ON CONFLICT (email) DO NOTHING;

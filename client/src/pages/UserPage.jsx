@@ -23,6 +23,8 @@ const UserPage = () => {
 
   const [searchText, setSearchText] = useState("");
 
+  const userNotManager = users.filter((user) => user.is_manager === false);
+
   useEffect(() => {
     const init = async () => {
       try {
@@ -91,7 +93,7 @@ const UserPage = () => {
             <option value="" disabled>
               Dear friend
             </option>
-            {users.map((user) => (
+            {userNotManager.map((user) => (
               <option key={user.id} value={user.id}>
                 {user.name}
               </option>
