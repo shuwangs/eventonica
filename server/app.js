@@ -9,7 +9,6 @@ const app = express();
 app.use(cors());
 app.use(express.json())
 
-
 app.get("/api/users", async (req, res)=>{
     try{
         const result = await userService.getAllUsers();
