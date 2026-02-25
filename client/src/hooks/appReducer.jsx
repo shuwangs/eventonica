@@ -2,6 +2,7 @@ export const initialState = {
   data: {
     eventsAll: [],
     users: [],
+    userFavEvents: [],
   },
   status: {
     loading: false,
@@ -21,6 +22,7 @@ export const initialState = {
 export const ACTIONS = {
   setEventsAll: "setEventsAll",
   setUsers: "setUsers",
+  setUserFavEvents: "setUserFavEvents",
 
   createEvent: "createEvent",
   deleteEvent: "deleteEvent",
@@ -44,6 +46,13 @@ export function appReducer(state, action) {
       };
     case ACTIONS.setUsers:
       return { ...state, data: { ...state.data, users: action.payload } };
+
+    // Set User Favorite Events.
+    case ACTIONS.setUserFavEvents:
+      return {
+        ...state,
+        data: { ...state.data, userFavEvents: action.payload },
+      };
 
     // Create, delete and update event.
     case ACTIONS.createEvent:

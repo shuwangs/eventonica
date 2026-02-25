@@ -3,7 +3,11 @@ import UserEventList from "../components/UserEventList";
 import { appReducer, initialState, ACTIONS } from "../hooks/appReducer.jsx";
 import { fetchEvents, searchEvents } from "../controller/eventsController.jsx";
 import { fetchCategories } from "../controller/categoriesController.jsx";
-
+import {
+  fetchUserFavorite,
+  addUserFavorite,
+  deleteUserFavorite,
+} from "../controller/favoriteController.jsx";
 import { fetchUsers } from "../controller/userController.jsx";
 import "../App.css";
 import "./UserPage.css";
@@ -11,12 +15,12 @@ import "./ManagerPage.css";
 
 const UserPage = () => {
   const [state, dispatch] = useReducer(appReducer, initialState);
-  const { eventsAll, users } = state.data;
+  const { eventsAll, users, userFavEvents } = state.data;
   const { loading, error } = state.status;
 
   const [currentUserId, setCurrentUserId] = useState("");
   const [showFavOnly, setShowFavOnly] = useState(false);
-  const [userFavEvents, setUserFavEvents] = useState([]);
+  // const [userFavEvents, setUserFavEvents] = useState([]);
   const [eventCategories, setEventCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
 
@@ -58,100 +62,8 @@ const UserPage = () => {
 
   useEffect(() => {
     if (!currentUserId) return;
-    fetchUserFavorite(currentUserId);
+    fetchUserFavorite(dispatch, currentUserId);
   }, [currentUserId]);
-
-  // const searchEvents = async (queryText, category) => {
-  //   dispatch({ type: ACTIONS.setError, payload: null });
-  //   dispatch({ type: ACTIONS.setLoading, payload: true });
-  //   try {
-  //     const params = new URLSearchParams();
-  //     if (queryText) params.append("q", queryText);
-  //     if (category && category === "All") params.append("category", category);
-  //     console.log("querytext front is: ", queryText);
-  //     console.log("query category is: ", category);
-  //     console.log(params.toString());
-
-  //     const response = await fetch(`/api/events/search?${params.toString()}`);
-
-  //     if (!response.ok) throw new Error("Search failed");
-
-  //     const data = await response.json();
-  //     console.log("searched events: ", data);
-  //     dispatch({ type: ACTIONS.setEvents, payload: data });
-  //   } catch (err) {
-  //     setError(err.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  const fetchUserFavorite = async (currentUserId) => {
-    dispatch({ type: ACTIONS.setError, payload: null });
-    dispatch({ type: ACTIONS.setLoading, payload: true });
-    try {
-      const response = await fetch(`/api/users/${currentUserId}/favorites`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch users");
-      }
-      const data = await response.json();
-      setUserFavEvents(data);
-    } catch (err) {
-      dispatch({ type: ACTIONS.setError, payload: err.message });
-    } finally {
-      dispatch({ type: ACTIONS.setLoading, payload: false });
-    }
-  };
-
-  const addUserFavorite = async (currentUserId, event_id) => {
-    dispatch({ type: ACTIONS.setError, payload: null });
-    dispatch({ type: ACTIONS.setLoading, payload: true });
-    console.log("adding to the user favorite");
-    try {
-      const response = await fetch(`/api/users/${currentUserId}/favorites`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id: currentUserId, event_id: event_id }),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to post user favorites event");
-      }
-      const data = await response.json();
-      setUserFavEvents((prev) => [
-        ...prev,
-        { user_id: currentUserId, event_id: event_id },
-      ]);
-    } catch (err) {
-      dispatch({ type: ACTIONS.setError, payload: null });
-    } finally {
-      dispatch({ type: ACTIONS.setLoading, payload: false });
-    }
-  };
-  const deleteUserFavorite = async (currentUserId, event_id) => {
-    console.log("deleting from the user favorite");
-    dispatch({ type: ACTIONS.setError, payload: null });
-    dispatch({ type: ACTIONS.setLoading, payload: true });
-    try {
-      const response = await fetch(
-        `/api/users/${currentUserId}/favorites/${event_id}`,
-        {
-          method: "DELETE",
-        },
-      );
-      if (!response.ok) {
-        throw new Error("Failed to delete favorite");
-      }
-      const data = await response.json();
-
-      setUserFavEvents((prev) => {
-        return prev.filter((fav) => Number(fav.event_id) !== Number(event_id));
-      });
-    } catch (err) {
-      dispatch({ type: ACTIONS.setError, payload: err.message });
-    } finally {
-      dispatch({ type: ACTIONS.setLoading, payload: false });
-    }
-  };
 
   const showFavorite = (events) => {
     const filteredEvents = events.filter((event) => {
@@ -167,9 +79,9 @@ const UserPage = () => {
     if (!currentUserId) return;
     const isFav = userFavEvents.some((f) => f.event_id === Number(event_id));
     if (isFav) {
-      return deleteUserFavorite(currentUserId, event_id);
+      return deleteUserFavorite(dispatch, currentUserId, event_id);
     } else {
-      return addUserFavorite(currentUserId, event_id);
+      return addUserFavorite(dispatch, currentUserId, event_id);
     }
   };
 
