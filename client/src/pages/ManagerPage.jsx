@@ -3,12 +3,14 @@ import UserRegisterForm from "../components/UserRegisterForm";
 import EventList from "../components/EventList";
 import EventForm from "../components/EventForm.jsx";
 import UserList from "../components/UserList.jsx";
+import SearchBar from "../components/SearchBar.jsx";
 import { appReducer, initialState, ACTIONS } from "../hooks/appReducer.jsx";
 import {
   fetchEvents,
   createEvent,
   deleteEvent,
   updateEvent,
+  searchEvents,
 } from "../controller/eventsController.jsx";
 import { fetchUsers } from "../controller/userController.jsx";
 
@@ -20,6 +22,8 @@ const ManagerPage = () => {
   const { eventsAll, users } = state.data;
   const { loading, error } = state.status;
   const { activeTab, showEventForm, editingEvent } = state.ui.manager;
+  const [searchText, setSearchText] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
 
   // const { events, users, error, loading, editingEvent, ui } = state;
 
@@ -27,6 +31,18 @@ const ManagerPage = () => {
     fetchEvents(dispatch);
     fetchUsers(dispatch);
   }, [dispatch]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!searchText.trim() && activeCategory === "All") {
+        fetchEvents(dispatch);
+        return;
+      }
+
+      searchEvents(dispatch, searchText.trim(), activeCategory);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchText, activeCategory]);
 
   return (
     <div className="manager-page-container">
@@ -65,11 +81,9 @@ const ManagerPage = () => {
           + Add Event
         </button>
 
-        <input
-          type="text"
-          id="userSearchInput"
-          placeholder="Search events..."
-          className="search-input input-style"
+        <SearchBar
+          searchText={searchText}
+          onChange={(val) => setSearchText(val)}
         />
       </div>
 

@@ -17,7 +17,7 @@ const EventDisplayCard = ({ event, isFav, onToggleFavorite }) => {
       </div>
 
       <h3>{event.name || "Untitled Event"}</h3>
-      <p>{event.descriptions || "No description available"}</p>
+      <p>{event.description || "No description available"}</p>
       <div className="time-display">
         <span>🗓️</span>
         {event.event_date_time.toLocaleString()}

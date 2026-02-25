@@ -1,5 +1,6 @@
 import React, { useState, useReducer, useEffect, useMemo } from "react";
 import UserEventList from "../components/UserEventList";
+import SearchBar from "../components/SearchBar.jsx";
 import { appReducer, initialState, ACTIONS } from "../hooks/appReducer.jsx";
 import { fetchEvents, searchEvents } from "../controller/eventsController.jsx";
 import { fetchCategories } from "../controller/categoriesController.jsx";
@@ -21,7 +22,6 @@ const UserPage = () => {
 
   const [currentUserId, setCurrentUserId] = useState("");
   const [showFavOnly, setShowFavOnly] = useState(false);
-  // const [userFavEvents, setUserFavEvents] = useState([]);
   const [eventCategories, setEventCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
 
@@ -112,16 +112,10 @@ const UserPage = () => {
 
       <div className="user-page-content">
         {/* UserPage Left area */}
-        <input
-          className="input-style search-input"
-          type="text"
-          placeholder="Search events..."
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
+        <SearchBar
+          searchText={searchText}
+          onChange={(val) => setSearchText(val)}
         />
-        {/* <button className="btn-primary show-categories-btn">
-          All Categories{" "}
-        </button> */}
         <button
           className="btn-primary show-favorites-btn"
           onClick={() => setShowFavOnly(!showFavOnly)}
