@@ -79,7 +79,7 @@ const UserPage = () => {
       {/* UserPage Header area */}
       <div className="user-page-header">
         <div>
-          <h1>✨ Event Manager</h1>
+          <h1>✨ Event Board</h1>
         </div>
         <div className="user-page-welcome">
           <div>Hello</div>
