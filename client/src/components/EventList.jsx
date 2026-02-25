@@ -5,7 +5,6 @@ import { MdOutlineDeleteForever } from "react-icons/md";
 import "./EventForm.css";
 
 const EventList = ({ events, onDelete, onEdit }) => {
-  console.log(events);
   return (
     <div className="event-list-container">
       <h2>Event List</h2>

@@ -5,7 +5,6 @@ import { appReducer, initialState, ACTIONS } from "../hooks/appReducer.js";
 import "./EventForm.css";
 
 const EventForm = ({ eventOnSubmit, onClose, initialEvent = null }) => {
-  // TODO: fetch categories from the backend and populate the category input as a dropdown
   const initalData = {
     name: "",
     event_date_time: "",
@@ -24,6 +23,7 @@ const EventForm = ({ eventOnSubmit, onClose, initialEvent = null }) => {
     "Workshop",
     "Community",
   ];
+  
   useEffect(() => {
     if (initialEvent) {
       resetForm({

@@ -5,13 +5,10 @@ import pool from "../db/db.js";
 
 const getAllEvents = async () => {
     const result = await pool.query(sql_queries.GET_ALL_EVENTS);
-    
-    // console.log(result.rows);
     return result.rows;
 }
 const getAllCategories = async () => {
     const result = await pool.query(sql_queries.GET_ALL_CATEGORIES);
-    console.log(result.rows);
     return result.rows;
 }
 
@@ -49,9 +46,7 @@ const deleteEvent = async (id) => {
 const searchEvents = async (queryText, category) => {
     const keyword = queryText ? `%${queryText}%` : null;
     const cat = category && category !== "All" ? category : null;
-    console.log("category in userService is:", category);
     const res = await pool.query(sql_queries.SEARCH_EVENTS, [keyword, cat]);
-    console.log(res.rows);
     return res.rows;
 }
 

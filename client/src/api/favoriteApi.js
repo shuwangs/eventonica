@@ -20,7 +20,6 @@ export const fetchUserFavorite = async (dispatch, currentUserId) => {
 export const addUserFavorite = async (dispatch, currentUserId, event_id) => {
   dispatch({ type: ACTIONS.setError, payload: null });
   dispatch({ type: ACTIONS.setLoading, payload: true });
-  console.log("adding to the user favorite");
   try {
     const response = await fetch(`/api/users/${currentUserId}/favorites`, {
       method: "POST",
@@ -54,7 +53,6 @@ export const addUserFavorite = async (dispatch, currentUserId, event_id) => {
 };
 
 export const deleteUserFavorite = async (dispatch, currentUserId, event_id) => {
-  console.log("deleting from the user favorite");
   dispatch({ type: ACTIONS.setError, payload: null });
   dispatch({ type: ACTIONS.setLoading, payload: true });
   try {

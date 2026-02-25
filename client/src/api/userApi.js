@@ -10,7 +10,6 @@ export const fetchUsers = async (dispatch) => {
       throw new Error("Failed to fetch users");
     }
     const data = await response.json();
-    console.log("fetched users are:", data);
     dispatch({
       type: ACTIONS.setUsers,
       payload: data,

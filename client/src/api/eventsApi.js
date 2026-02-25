@@ -25,7 +25,6 @@ export const fetchEvents = async (dispatch) => {
 export const createEvent = async (dispatch, eventData) => {
   dispatch({ type: ACTIONS.setLoading, payload: true });
   dispatch({ type: ACTIONS.setError, payload: null });
-  console.log("create function...");
   const formatedEventData = {
     ...eventData,
     event_date_time: new Date(eventData.event_date_time).toISOString(),
@@ -79,12 +78,9 @@ export const deleteEvent = async (dispatch, id) => {
     dispatch({ type: ACTIONS.setLoading, payload: false });
   }
 
-  console.log("delete function");
 };
 
 export const updateEvent = async (dispatch, id, eventData) => {
-  console.log("passed in id:", id);
-  console.log("passed in eventData:", eventData);
   dispatch({ type: ACTIONS.setLoading, payload: true });
   dispatch({ type: ACTIONS.setError, payload: null });
   const formattedEventData = {
@@ -104,7 +100,6 @@ export const updateEvent = async (dispatch, id, eventData) => {
     }
 
     const updatedEvent = await response.json();
-    console.log(updatedEvent);
 
     // Update the frontend
     dispatch({ type: ACTIONS.updateEvent, payload: updatedEvent });
@@ -124,16 +119,12 @@ export const searchEvents = async (dispatch, queryText, category) => {
     const params = new URLSearchParams();
     if (queryText) params.append("q", queryText);
     if (category && category === "All") params.append("category", category);
-    console.log("querytext front is: ", queryText);
-    console.log("query category is: ", category);
-    console.log(params.toString());
 
     const response = await fetch(`/api/events/search?${params.toString()}`);
 
     if (!response.ok) throw new Error("Search failed");
 
     const data = await response.json();
-    console.log("searched events: ", data);
     dispatch({ type: ACTIONS.setEventsAll, payload: data });
   } catch (err) {
     dispatch({ type: ACTIONS.setError, payload: err.message });

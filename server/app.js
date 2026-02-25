@@ -13,7 +13,6 @@ app.use(express.json())
 app.get("/api/users", async (req, res)=>{
     try{
         const result = await userService.getAllUsers();
-        console.log(`the users are : \n ${result}`)
         res.json(result);
     }catch (err) {
         console.error(err);
@@ -27,7 +26,6 @@ app.get("/api/users", async (req, res)=>{
 app.get("/api/events", async (req, res) => {
     try{
         const result = await eventService.getAllEvents();
-        console.log(`the events are : \n ${result}`)
         res.json(result);
 
     } catch(err) {
@@ -39,11 +37,9 @@ app.get("/api/events", async (req, res) => {
 
 app.delete("/api/events/:id", async (req, res) => {
     const deleteId = Number(req.params.id);
-    console.log(`the id to be deleted ${deleteId}`);
 
     try{
         const result = await eventService.deleteEvent(deleteId);
-        console.log(`the events are : \n ${result}`)
         res.json(result);
 
     } catch(err) {
@@ -59,7 +55,6 @@ app.post("/api/events", async (req, res) => {
 
     try{
         const result = await eventService.addEvent( {name, event_date_time, location, description, category});
-        console.log(`the events are : \n ${result}`)
         res.json(result);
 
     } catch(err) {
@@ -79,7 +74,6 @@ app.put("/api/events/:id", async (req, res) => {
         if (!result) {
             return res.status(404).json({ error: "Event not found" });
         }
-        console.log(`the events are : \n ${result}`);
 
         res.json(result);
 
@@ -95,13 +89,11 @@ app.put("/api/events/:id", async (req, res) => {
 
 app.get("/api/users/:userId/favorites", async (req, res) => {
     const userId = Number(req.params.userId);
-    console.log(`the id to be deleted ${userId}`);
     try {
         const result = await userService.getUserFavorites(userId);
         if (!result) {
             return res.status(404).json({ error: "Favorite events not found" });
         }
-        console.log(`the events are : \n ${result}`);
 
         res.json(result);
     } catch(err) {
@@ -115,14 +107,11 @@ app.get("/api/users/:userId/favorites", async (req, res) => {
 app.post("/api/users/:user_id/favorites", async (req, res) => {
     const {user_id, event_id } = req.body;
 
-    console.log(`the users are to be deleted,`, user_id);
-    console.log(`the users add into favoriate list`, event_id )
     try {
         const result = await userService.addUserFavorites(user_id, event_id);
         if (!result) {
             return res.status(404).json({ error: "add to favorite not found" });
         }
-        console.log(`the events are : \n ${result}`);
 
         res.json(result);
     } catch(err) {
@@ -135,8 +124,6 @@ app.post("/api/users/:user_id/favorites", async (req, res) => {
 
 app.delete("/api/users/:user_id/favorites/:event_id", async (req, res) => {
     const {user_id, event_id} = req.params;
-    console.log("to delter fav user", user_id);
-    console.log("to delter fav event", event_id);
 
     try {
         const result = await userService.deleteUserFavorites(user_id, event_id);
@@ -160,11 +147,8 @@ app.get('/api/categories', async (req, res) => {
 })
 
 app.get('/api/events/search', async (req, res) => {
-    console.log(req.query);
     const queryText = (req.query.q || "").toString().trim();
     const category = (req.query.category || "All").toString().trim();
-    console.log("queryText is: ", queryText);
-    console.log("query category is: ", category);
     try {
         const events = await eventService.searchEvents(queryText, category);
         res.json(events);

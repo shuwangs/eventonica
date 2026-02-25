@@ -19,8 +19,6 @@ const ManagerPage = () => {
   const [searchText, setSearchText] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
 
-  // const { events, users, error, loading, editingEvent, ui } = state;
-
   useEffect(() => {
     eventsApi.fetchEvents(dispatch);
     fetchUsers(dispatch);
