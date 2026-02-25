@@ -1,4 +1,71 @@
-# eventonica
+# Eventonica
+
+## Overview
+
+Eventonica is a full-stack event management web application built with React, Express, and PostgreSQL.
+
+Users can:
+- Browse and search events
+- Filter by category or date
+- Favorite / unfavorite events
+
+Managers can:
+- Create, update, and delete events
+- View users
+
+
+## Demo 
+<img src="client/public/eventonica.gif" height="250">
+
+## Tech Stack
+
+- Frontend: React, JavaScript, CSS
+- Backend: Node.js, Express
+- Database: PostgreSQL
+- Other: REST API, useReducer state management
+
+
+## Features
+
+- View all events
+- Search events by name, category, or date
+- Filter events by category
+- Favorite / unfavorite events
+- Create, update, and delete events
+- Persistent storage using PostgreSQL
+- Global state management with useReducer
+
+## API Endpoints
+### Events
+GET /api/events  
+POST /api/events  
+PUT /api/events/:id  
+DELETE /api/events/:id  
+GET /api/events/search?params
+
+### Users
+GET /api/users  
+GET /api/users/:id/favorites  
+POST /api/users/:id/favorites
+DELETE /api/users/:id/favorites/:eventId
+### Categories
+GET /api/categories
+
+## Database Schema
+
+- **events** — stores event details  
+- **users** — stores users  
+- **categories** — event categories  
+- **user_favorites** — many-to-many relation between users and events
+
+## Testing
+Test will be added to cover frontend components, backend routes, api endpoints. 
+
+## Future Improvements
+- User authentication
+- Role-based access control
+- Deployment to cloud
+
 
 ## How to start?
 
