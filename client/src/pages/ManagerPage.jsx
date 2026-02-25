@@ -71,21 +71,23 @@ const ManagerPage = () => {
       </div>
 
       {/* Search + Add */}
-      <div className="search-container">
-        <button
-          onClick={() =>
-            dispatch({ type: ACTIONS.setShowEventForm, payload: true })
-          }
-          className="btn-primary"
-        >
-          + Add Event
-        </button>
+      {activeTab === "events" && (
+        <div className="search-container">
+          <button
+            onClick={() =>
+              dispatch({ type: ACTIONS.setShowEventForm, payload: true })
+            }
+            className="btn-primary"
+          >
+            + Add Event
+          </button>
 
-        <SearchBar
-          searchText={searchText}
-          onChange={(val) => setSearchText(val)}
-        />
-      </div>
+          <SearchBar
+            searchText={searchText}
+            onChange={(val) => setSearchText(val)}
+          />
+        </div>
+      )}
 
       {error && <p style={{ color: "red" }}>{error}</p>}
       {loading && <p>Loading...</p>}
@@ -126,7 +128,12 @@ const ManagerPage = () => {
 
       {/* Show the users */}
 
-      {activeTab === "users" && <UserList users={users} />}
+      {activeTab === "users" && (
+        <div>
+          <h2> Registered Users</h2>
+          <UserList users={users} />
+        </div>
+      )}
     </div>
   );
 };

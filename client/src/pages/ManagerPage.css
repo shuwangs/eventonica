@@ -43,3 +43,7 @@
   background-color: var(--accent-primary);
   color: #fff
 }
+.search-container {
+  gap: 15px;
+
+}

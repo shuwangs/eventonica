@@ -26,12 +26,15 @@ export const createEvent = async (dispatch, eventData) => {
   dispatch({ type: ACTIONS.setLoading, payload: true });
   dispatch({ type: ACTIONS.setError, payload: null });
   console.log("create function...");
-
+  const formatedEventData = {
+    ...eventData,
+    event_date_time: new Date(eventData.event_date_time).toISOString(),
+  };
   try {
     const response = await fetch(`/api/events`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(eventData),
+      body: JSON.stringify(formatedEventData),
     });
 
     if (!response.ok) {
@@ -84,12 +87,16 @@ export const updateEvent = async (dispatch, id, eventData) => {
   console.log("passed in eventData:", eventData);
   dispatch({ type: ACTIONS.setLoading, payload: true });
   dispatch({ type: ACTIONS.setError, payload: null });
-  const formatedData = { ...eventData, id: Number(id) };
+  const formattedEventData = {
+    ...eventData,
+    id: Number(id),
+    event_date_time: new Date(eventData.event_date_time).toISOString(),
+  };
   try {
     const response = await fetch(`/api/events/${Number(id)}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formatedData),
+      body: JSON.stringify(formattedEventData),
     });
 
     if (!response.ok) {

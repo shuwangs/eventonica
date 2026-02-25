@@ -93,3 +93,30 @@
   font-size: 1rem;
   padding: 10px 20px;
 }
+
+.icon-btn {
+  border: none;
+  background: transparent;
+  padding: 6px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s ease;
+  color:var(--text-primary)
+}
+
+.icon-btn.edit:hover {
+  color: #2563eb;
+}
+
+.icon-btn.delete:hover {
+  color: #dc2626;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 15px;
+}
