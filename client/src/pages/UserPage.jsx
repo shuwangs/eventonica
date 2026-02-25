@@ -1,12 +1,12 @@
 import React, { useState, useReducer, useEffect, useMemo } from "react";
 import UserEventList from "../components/UserEventList";
 import SearchBar from "../components/SearchBar.jsx";
-import { appReducer, initialState, ACTIONS } from "../hooks/appReducer.jsx";
+import { appReducer, initialState, ACTIONS } from "../hooks/appReducer.js";
 import * as eventsApi from "../api/eventsApi.js";
 import { fetchCategories } from "../api/categoriesApi.js";
-import * as favoritesApi from "../api/favoritesApi.js";
+import * as favoritesApi from "../api/favoriteApi.js";
 
-import { showFavorite, getEventByCategory } from "../utils/selectors.jsx";
+import { showFavorite, getEventByCategory } from "../utils/selectors.js";
 import { fetchUsers } from "../api/userApi.js";
 import "../App.css";
 import "./UserPage.css";

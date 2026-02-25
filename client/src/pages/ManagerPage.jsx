@@ -4,7 +4,7 @@ import EventList from "../components/EventList";
 import EventForm from "../components/EventForm.jsx";
 import UserList from "../components/UserList.jsx";
 import SearchBar from "../components/SearchBar.jsx";
-import { appReducer, initialState, ACTIONS } from "../hooks/appReducer.jsx";
+import { appReducer, initialState, ACTIONS } from "../hooks/appReducer.js";
 import * as eventsApi from "../api/eventsApi.js";
 import { fetchUsers } from "../api/userApi.js";
 
