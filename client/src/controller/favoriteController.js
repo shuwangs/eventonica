@@ -33,10 +33,7 @@ export const addUserFavorite = async (dispatch, currentUserId, event_id) => {
     const data = await response.json();
 
     dispatch({ type: ACTIONS.setUserFavEvents, payload: data });
-    // setUserFavEvents((prev) => [
-    //   ...prev,
-    //   { user_id: currentUserId, event_id: event_id },
-    // ]);
+
     const prev = getState().data.userFavEvents;
     const exists = prev.some(
       (f) =>
@@ -50,7 +47,7 @@ export const addUserFavorite = async (dispatch, currentUserId, event_id) => {
 
     dispatch({ type: ACTIONS.setUserFavEvents, payload: next });
   } catch (err) {
-    dispatch({ type: ACTIONS.setError, payload: null });
+    dispatch({ type: ACTIONS.setError, payload: err.message });
   } finally {
     dispatch({ type: ACTIONS.setLoading, payload: false });
   }
@@ -80,9 +77,6 @@ export const deleteUserFavorite = async (dispatch, currentUserId, event_id) => {
 
     dispatch({ type: ACTIONS.setUserFavEvents, payload: leftAfterDelete });
 
-    // setUserFavEvents((prev) => {
-    //   return prev.filter((fav) => Number(fav.event_id) !== Number(event_id));
-    // });
   } catch (err) {
     dispatch({ type: ACTIONS.setError, payload: err.message });
   } finally {
