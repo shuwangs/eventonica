@@ -1,4 +1,4 @@
-import { ACTIONS } from "../hooks/appReducer.jsx";
+import { ACTIONS } from "../hooks/appReducer.js";
 
 export const fetchUserFavorite = async (dispatch, currentUserId) => {
   dispatch({ type: ACTIONS.setError, payload: null });

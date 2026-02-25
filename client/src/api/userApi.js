@@ -1,4 +1,4 @@
-import { ACTIONS } from "../hooks/appReducer.jsx";
+import { ACTIONS } from "../hooks/appReducer.js";
 
 export const fetchUsers = async (dispatch) => {
   dispatch({ type: ACTIONS.setLoading, payload: true });

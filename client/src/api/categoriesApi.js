@@ -1,4 +1,4 @@
-import { ACTIONS } from "../hooks/appReducer.jsx";
+import { ACTIONS } from "../hooks/appReducer.js";
 
 export const fetchCategories = async (dispatch) => {
   const response = await fetch("/api/categories");

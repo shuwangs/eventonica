@@ -5,14 +5,8 @@ import EventForm from "../components/EventForm.jsx";
 import UserList from "../components/UserList.jsx";
 import SearchBar from "../components/SearchBar.jsx";
 import { appReducer, initialState, ACTIONS } from "../hooks/appReducer.jsx";
-import {
-  fetchEvents,
-  createEvent,
-  deleteEvent,
-  updateEvent,
-  searchEvents,
-} from "../controller/eventsController.jsx";
-import { fetchUsers } from "../controller/userController.jsx";
+import * as eventsApi from "../api/eventsApi.js";
+import { fetchUsers } from "../api/userApi.js";
 
 import "../App.css";
 import "./ManagerPage.css";
@@ -28,18 +22,18 @@ const ManagerPage = () => {
   // const { events, users, error, loading, editingEvent, ui } = state;
 
   useEffect(() => {
-    fetchEvents(dispatch);
+    eventsApi.fetchEvents(dispatch);
     fetchUsers(dispatch);
   }, [dispatch]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (!searchText.trim() && activeCategory === "All") {
-        fetchEvents(dispatch);
+        eventsApi.fetchEvents(dispatch);
         return;
       }
 
-      searchEvents(dispatch, searchText.trim(), activeCategory);
+      eventsApi.searchEvents(dispatch, searchText.trim(), activeCategory);
     }, 300);
     return () => clearTimeout(timer);
   }, [searchText, activeCategory]);
@@ -101,9 +95,9 @@ const ManagerPage = () => {
               initialEvent={editingEvent}
               eventOnSubmit={(eventData) => {
                 if (editingEvent) {
-                  updateEvent(dispatch, editingEvent.id, eventData);
+                  eventsApi.updateEvent(dispatch, editingEvent.id, eventData);
                 } else {
-                  createEvent(dispatch, eventData);
+                  eventsApi.createEvent(dispatch, eventData);
                 }
               }}
               onClose={() =>
@@ -118,7 +112,7 @@ const ManagerPage = () => {
       {activeTab === "events" && (
         <EventList
           events={eventsAll}
-          onDelete={(id) => deleteEvent(dispatch, id)}
+          onDelete={(id) => eventsApi.deleteEvent(dispatch, id)}
           onEdit={(eventData) => {
             dispatch({ type: ACTIONS.setEditingEvent, payload: eventData });
             dispatch({ type: ACTIONS.setShowEventForm, payload: true });

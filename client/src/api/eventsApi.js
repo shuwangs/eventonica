@@ -1,4 +1,4 @@
-import { ACTIONS } from "../hooks/appReducer.jsx";
+import { ACTIONS } from "../hooks/appReducer.js";
 
 // get all events
 export const fetchEvents = async (dispatch) => {

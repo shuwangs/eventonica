@@ -2,15 +2,12 @@ import React, { useState, useReducer, useEffect, useMemo } from "react";
 import UserEventList from "../components/UserEventList";
 import SearchBar from "../components/SearchBar.jsx";
 import { appReducer, initialState, ACTIONS } from "../hooks/appReducer.jsx";
-import { fetchEvents, searchEvents } from "../controller/eventsController.jsx";
-import { fetchCategories } from "../controller/categoriesController.jsx";
-import {
-  fetchUserFavorite,
-  addUserFavorite,
-  deleteUserFavorite,
-} from "../controller/favoriteController.jsx";
+import * as eventsApi from "../api/eventsApi.js";
+import { fetchCategories } from "../api/categoriesApi.js";
+import * as favoritesApi from "../api/favoritesApi.js";
+
 import { showFavorite, getEventByCategory } from "../utils/selectors.jsx";
-import { fetchUsers } from "../controller/userController.jsx";
+import { fetchUsers } from "../api/userApi.js";
 import "../App.css";
 import "./UserPage.css";
 import "./ManagerPage.css";
@@ -29,7 +26,7 @@ const UserPage = () => {
   useEffect(() => {
     const init = async () => {
       try {
-        await fetchEvents(dispatch);
+        await eventsApi.fetchEvents(dispatch);
         await fetchUsers(dispatch);
 
         const cats = await fetchCategories();
@@ -45,27 +42,27 @@ const UserPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (!searchText.trim() && activeCategory === "All") {
-        fetchEvents(dispatch);
+        eventsApi.fetchEvents(dispatch);
         return;
       }
 
-      searchEvents(dispatch, searchText.trim(), activeCategory);
+      eventsApi.searchEvents(dispatch, searchText.trim(), activeCategory);
     }, 300);
     return () => clearTimeout(timer);
   }, [searchText, activeCategory]);
 
   useEffect(() => {
     if (!currentUserId) return;
-    fetchUserFavorite(dispatch, currentUserId);
+    favoritesApi.fetchUserFavorite(dispatch, currentUserId);
   }, [currentUserId, userFavEvents]);
 
   const toggleHeartBtn = (event_id) => {
     if (!currentUserId) return;
     const isFav = userFavEvents.some((f) => f.event_id === Number(event_id));
     if (isFav) {
-      return deleteUserFavorite(dispatch, currentUserId, event_id);
+      return favoritesApi.deleteUserFavorite(dispatch, currentUserId, event_id);
     } else {
-      return addUserFavorite(dispatch, currentUserId, event_id);
+      return favoritesApi.addUserFavorite(dispatch, currentUserId, event_id);
     }
   };
 
