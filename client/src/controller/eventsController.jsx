@@ -44,7 +44,7 @@ export const createEvent = async (dispatch, eventData) => {
     const newEvent = await response.json();
 
     // Update the frontend
-    dispatch({ type: ACTIONS.createEvent, payload: newEvent });
+    dispatch({ type: ACTIONS.createEvent, payload: formatedEventData });
 
     // close the modal
     dispatch({ type: ACTIONS.setShowEventForm, payload: false });
