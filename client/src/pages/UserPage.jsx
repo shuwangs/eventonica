@@ -18,7 +18,6 @@ import "./ManagerPage.css";
 const UserPage = () => {
   const [state, dispatch] = useReducer(appReducer, initialState);
   const { eventsAll, users, userFavEvents } = state.data;
-  const { loading, error } = state.status;
 
   const [currentUserId, setCurrentUserId] = useState("");
   const [showFavOnly, setShowFavOnly] = useState(false);
@@ -26,12 +25,6 @@ const UserPage = () => {
   const [activeCategory, setActiveCategory] = useState("All");
 
   const [searchText, setSearchText] = useState("");
-
-  // useEffect(() => {
-  //   console.log("calling fetchEvents...");
-  //   fetchEvents(dispatch);
-  //   fetchUsers(dispatch);
-  // }, []);
 
   useEffect(() => {
     const init = async () => {
@@ -47,7 +40,7 @@ const UserPage = () => {
     };
 
     init();
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {

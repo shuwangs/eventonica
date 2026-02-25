@@ -20,7 +20,8 @@ const EventDisplayCard = ({ event, isFav, onToggleFavorite }) => {
       <p>{event.description || "No description available"}</p>
       <div className="time-display">
         <span>🗓️</span>
-        {event.event_date_time.toLocaleString()}
+        {/* {event.event_date_time.toLocaleString()} */}
+        {new Date(event.event_date_time).toLocaleString()}
       </div>
 
       <div className="display-location">

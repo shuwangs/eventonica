@@ -24,7 +24,7 @@ const EventList = ({ events, onDelete, onEdit }) => {
             events.map((event) => (
               <tr>
                 <td>{event.name}</td>
-                <td>{event.event_date_time}</td>
+                <td>{new Date(event.event_date_time).toLocaleString()}</td>
                 <td>{event.location}</td>
                 <td>{event.category}</td>
                 <td>{event.description}</td>
