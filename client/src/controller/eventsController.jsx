@@ -127,7 +127,7 @@ export const searchEvents = async (dispatch, queryText, category) => {
 
     const data = await response.json();
     console.log("searched events: ", data);
-    dispatch({ type: ACTIONS.setEvents, payload: data });
+    dispatch({ type: ACTIONS.setEventsAll, payload: data });
   } catch (err) {
     dispatch({ type: ACTIONS.setError, payload: err.message });
   } finally {

@@ -125,6 +125,6 @@ export const DELETE_CATEGORY = `
 export const SEARCH_EVENTS =`
 SELECT id, name, event_date_time, location, category, description
 FROM eventsdb.events
-WHERE ($1::text IS NULL OR name ILIKE $1 OR location ILIKE $1 OR description ILIKE $1 )
+WHERE ($1::text IS NULL OR name ILIKE $1 OR location ILIKE $1 OR description ILIKE $1 OR CAST(event_date_time AS TEXT) LIKE $1)
 AND ($2::text IS NULL OR category = $2)
 ` 
