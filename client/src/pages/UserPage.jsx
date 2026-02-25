@@ -8,6 +8,7 @@ import {
   addUserFavorite,
   deleteUserFavorite,
 } from "../controller/favoriteController.jsx";
+import { showFavorite, getEventByCategory } from "../utils/selectors.jsx";
 import { fetchUsers } from "../controller/userController.jsx";
 import "../App.css";
 import "./UserPage.css";
@@ -63,17 +64,7 @@ const UserPage = () => {
   useEffect(() => {
     if (!currentUserId) return;
     fetchUserFavorite(dispatch, currentUserId);
-  }, [currentUserId]);
-
-  const showFavorite = (events) => {
-    const filteredEvents = events.filter((event) => {
-      return userFavEvents.some(
-        (fav) => Number(fav.event_id) === Number(event.id),
-      );
-    });
-
-    return filteredEvents;
-  };
+  }, [currentUserId, userFavEvents]);
 
   const toggleHeartBtn = (event_id) => {
     if (!currentUserId) return;
@@ -85,17 +76,12 @@ const UserPage = () => {
     }
   };
 
-  const getEventByCategory = (events, cat) => {
-    console.log("trying to get category id:", cat);
-    if (cat === "All") return events;
-    return events.filter((event) => event.category === cat);
-  };
-
   const displayedEvents = useMemo(() => {
     const byCategory = getEventByCategory(eventsAll, activeCategory);
-
-    if (!showFavOnly) return byCategory;
-    return showFavorite(byCategory);
+    if (!showFavOnly) {
+      return byCategory;
+    }
+    return showFavorite(byCategory, userFavEvents);
   }, [eventsAll, activeCategory, showFavOnly, userFavEvents]);
 
   return (
@@ -156,7 +142,7 @@ const UserPage = () => {
 
         {eventCategories.map((cat) => (
           <button
-            className={`category-filter-btn ${activeCategory === cat ? "active" : ""}`}
+            className={`category-filter-btn ${activeCategory === cat.name ? "active" : ""}`}
             onClick={() => setActiveCategory(cat.name)}
           >
             {cat.name}
