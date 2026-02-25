@@ -6,7 +6,7 @@ const TopNav = () => {
   return (
     <Navbar className="top-nav">
       <Navbar.Brand className="brand" href="#">
-        🌸 EventHub
+        🌸 Eventonica
       </Navbar.Brand>
 
       <Nav className="nav-links">

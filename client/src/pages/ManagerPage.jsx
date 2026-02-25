@@ -41,7 +41,7 @@ const ManagerPage = () => {
   return (
     <div className="manager-page-container">
       <div className="manager-page-header">
-        <h1>🔧 Admin Panel</h1>
+        <h1>🔧 Host Panel</h1>
       </div>
 
       {/* Manager Tabs */}
