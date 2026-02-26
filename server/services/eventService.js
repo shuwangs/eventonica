@@ -37,7 +37,6 @@ const updateEvent = async ({ id, name, event_date_time, location, category, desc
     return updatedRes.rows[0];
 }
 
-// TODO: delete event;
 const deleteEvent = async (id) => {
     const res = await pool.query(sql_queries.DELETE_EVENT, [id]);
     return res.rows;
