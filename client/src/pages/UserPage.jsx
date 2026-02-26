@@ -140,6 +140,7 @@ const UserPage = () => {
         events={displayedEvents}
         userFavEvents={userFavEvents}
         onToggleFavorite={toggleHeartBtn}
+        showFav ={showFavOnly}
       />
     </div>
   );

@@ -1,4 +1,3 @@
-// Hardcoded users
 import React from "react";
 const UserList = ({ users }) => {
   return (
