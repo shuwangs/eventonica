@@ -1,9 +1,9 @@
 import React, { createContext, useReducer } from "react";
 import { appReducer, initialState } from "../hooks/appReducer";
 
-const AppContext = createContext();
+export const AppContext = createContext();
 
-const AppContextProvider = ({ children }) => {
+export const AppContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
   return (
@@ -12,5 +12,3 @@ const AppContextProvider = ({ children }) => {
     </AppContext.Provider>
   );
 };
-
-export default { AppContext, AppContextProvider };
