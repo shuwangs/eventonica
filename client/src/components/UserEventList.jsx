@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Table from "react-bootstrap/Table";
 import EventDisplayCard from "./EventDisplayCard";
 import "./EventDisplayCard.css";

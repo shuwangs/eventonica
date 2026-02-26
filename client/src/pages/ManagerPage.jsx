@@ -109,7 +109,6 @@ const ManagerPage = () => {
       {/* Show the Events  */}
       {activeTab === "events" && (
         <EventList
-          events={eventsAll}
           onDelete={(id) => eventsApi.deleteEvent(dispatch, id)}
           onEdit={(eventData) => {
             dispatch({ type: ACTIONS.setEditingEvent, payload: eventData });

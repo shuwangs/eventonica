@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import Table from "react-bootstrap/Table";
 import { TiEdit } from "react-icons/ti";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import "./EventForm.css";
-
-const EventList = ({ events, onDelete, onEdit }) => {
+import { AppContext } from "../context/AppContext.jsx";
+const EventList = ({ onDelete, onEdit }) => {
+  const ctx = useContext(AppContext);
+  if (!ctx) throw new Error("AppContextProvider is missing");
+  const { state } = ctx;
+  const events = state.data.eventsAll;
   return (
     <div className="event-list-container">
       <h2>Event List</h2>
