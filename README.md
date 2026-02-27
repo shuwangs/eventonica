@@ -61,6 +61,15 @@ GET /api/categories
 ## Testing
 Test will be added to cover frontend components, backend routes, api endpoints. 
 
+### Backend tests are located in the server/__tests__/ directory
+- **app.test.js** – Integration tests for Express routes and API endpoints using Supertest.
+- **eventService.test.js** – Unit tests for event-related business logic (CRUD operations).
+- **userService.test.js** – Unit tests for user-related logic and favorites handling.
+
+```bash
+Run test
+```
+
 ## Future Improvements
 - User authentication
 - Role-based access control
