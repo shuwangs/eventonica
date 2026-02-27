@@ -1,10 +1,20 @@
 import app from "../app.js";
+import {jest} from "@jest/globals"
 import request from 'supertest';
+import { resetTestDb } from "../testUtils/setupTestDb.js";
+import pool from "../db/db.js";
 // Maybe should mock a db
 
 describe('Endpoint Tests', () => {
+    beforeAll(async () => {
+        await resetTestDb();
+    });
+
+    afterAll(async () => {
+        await pool.end();
+    });
+
     // Events related endpoinst
- 
     it('should return 200 for GET /api/events', async () => {
         const res = await request(app).get('/api/events');
         expect(res.statusCode).toEqual(200);

@@ -1,4 +1,4 @@
-import {describe, it, expect, beforeEach} from '@jest/globals';
+import {describe, it, expect, beforeEach, jest} from '@jest/globals';
 import userService from '../services/userService.js';
 import pool from '../db/db.js';
 
@@ -43,7 +43,7 @@ describe('User Service Tests  ', () => {
         jest.spyOn(pool, "query")
             .mockResolvedValueOnce({ rows: [created] })
             .mockResolvedValueOnce({ rows: [created] })
-            .mockResolvedValueOnce(rows:[]);
+            .mockResolvedValueOnce({rows:[]});
 
         const added = await userService.addUser(created.name, created.email);
         const deleted = await userService.deleteUser(added.id);
