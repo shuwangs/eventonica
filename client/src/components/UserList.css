@@ -1,0 +1,14 @@
+.userList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.userName{
+  display: inline;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px 14px;
+}
