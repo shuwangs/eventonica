@@ -5,7 +5,7 @@ import "./TopNav.css";
 const TopNav = () => {
   return (
     <Navbar className="top-nav">
-      <Navbar.Brand className="brand" href="#">
+      <Navbar.Brand className="brand" href="/">
         🌸 Eventonica
       </Navbar.Brand>
 
