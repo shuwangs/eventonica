@@ -9,7 +9,6 @@ const app = express();
 app.use(cors());
 app.use(express.json())
 
-
 app.get("/api/users", async (req, res)=>{
     try{
         const result = await userService.getAllUsers();
@@ -59,7 +58,7 @@ app.post("/api/events", async (req, res) => {
 
     } catch(err) {
         console.error(err);
-        res.status(500).json({ error: "Failed to delte events." });
+        res.status(500).json({ error: "Failed to create events." });
 
     }
 })
